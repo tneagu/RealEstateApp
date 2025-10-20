@@ -1,0 +1,30 @@
+package com.tneagu.realestateapp.features.listings.data.converter
+
+import com.tneagu.realestateapp.features.listings.data.dto.ListingDto
+import com.tneagu.realestateapp.features.listings.domain.model.Listing
+
+/**
+ * Converter class to transform [ListingDto] to [Listing] domain model.
+ */
+class ListingConverter {
+
+    /**
+     * Converts a [ListingDto] to a [Listing] domain model.
+     *
+     * @param dto The DTO from the API response.
+     * @return [Listing] domain model.
+     */
+    fun convert(dto: ListingDto): Listing {
+        return Listing(
+            id = dto.id,
+            bedrooms = dto.bedrooms,
+            city = dto.city,
+            area = dto.area,
+            imageUrl = dto.url,
+            price = dto.price,
+            professional = dto.professional,
+            propertyType = dto.propertyType,
+            rooms = dto.rooms
+        )
+    }
+}
