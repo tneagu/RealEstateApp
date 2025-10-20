@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt)
@@ -7,17 +7,14 @@ plugins {
 }
 
 android {
-    namespace = "com.tneagu.realestateapp"
+    namespace = "com.tneagu.realestateapp.features.listings"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.tneagu.realestateapp"
         minSdk = 28
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -44,17 +41,13 @@ android {
 }
 
 dependencies {
-
     // Modules
     implementation(project(":core:network"))
-    implementation(project(":features:listings"))
-    implementation(project(":features:listingdetails"))
 
     // Core Android
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation(libs.androidx.activity.compose)
 
     // Compose
     implementation(platform(libs.androidx.compose.bom))
@@ -74,8 +67,6 @@ dependencies {
     // Networking
     implementation(libs.retrofit)
     implementation(libs.retrofit.moshi)
-    implementation(libs.okhttp)
-    implementation(libs.okhttp.logging)
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
 
@@ -89,15 +80,6 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.turbine)
 
-    // Android Testing
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-    androidTestImplementation(libs.hilt.android.testing)
-    kspAndroidTest(libs.hilt.compiler)
-
     // Debug
     debugImplementation(libs.androidx.compose.ui.tooling)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
 }
