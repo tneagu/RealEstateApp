@@ -1,11 +1,11 @@
-package com.tneagu.realestateapp.features.listings.domain.model
+package com.tneagu.realestateapp.features.listingdetails.domain.model
 
 import com.tneagu.realestateapp.core.domain.model.OfferType
 
 /**
- * Domain model representing a real estate listing.
+ * Domain model representing detailed information about a specific real estate listing.
  */
-data class Listing(
+data class ListingDetail(
     val id: Int,
     val bedrooms: Int?,
     val city: String,

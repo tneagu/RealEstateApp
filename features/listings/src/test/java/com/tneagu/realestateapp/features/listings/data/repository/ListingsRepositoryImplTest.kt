@@ -6,7 +6,7 @@ import com.tneagu.realestateapp.features.listings.data.api.ListingsApiService
 import com.tneagu.realestateapp.features.listings.data.converter.ListingsResponseConverter
 import com.tneagu.realestateapp.features.listings.data.dto.ListingsResponseDto
 import com.tneagu.realestateapp.features.listings.domain.model.Listing
-import com.tneagu.realestateapp.features.listings.domain.model.OfferType
+import com.tneagu.realestateapp.core.domain.model.OfferType
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest

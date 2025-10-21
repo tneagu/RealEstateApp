@@ -1,8 +1,8 @@
 package com.tneagu.realestateapp.features.listings.data.converter
 
+import com.tneagu.realestateapp.core.domain.model.OfferType
 import com.tneagu.realestateapp.features.listings.data.dto.ListingDto
 import com.tneagu.realestateapp.features.listings.domain.model.Listing
-import com.tneagu.realestateapp.features.listings.domain.model.OfferType
 
 /**
  * Converter class to transform [ListingDto] to [Listing] domain model.

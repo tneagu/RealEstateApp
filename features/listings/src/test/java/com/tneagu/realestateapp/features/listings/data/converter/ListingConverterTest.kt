@@ -1,8 +1,8 @@
 package com.tneagu.realestateapp.features.listings.data.converter
 
+import com.tneagu.realestateapp.core.domain.model.OfferType
 import com.tneagu.realestateapp.features.listings.data.dto.ListingDto
 import com.tneagu.realestateapp.features.listings.domain.model.Listing
-import com.tneagu.realestateapp.features.listings.domain.model.OfferType
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

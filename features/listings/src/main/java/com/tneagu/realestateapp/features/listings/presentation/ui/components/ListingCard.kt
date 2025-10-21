@@ -35,7 +35,7 @@ import com.tneagu.realestateapp.core.ui.theme.Dimensions
 import com.tneagu.realestateapp.core.ui.theme.RealEstateAppTheme
 import com.tneagu.realestateapp.core.ui.theme.Spacing
 import com.tneagu.realestateapp.features.listings.domain.model.Listing
-import com.tneagu.realestateapp.features.listings.domain.model.OfferType
+import com.tneagu.realestateapp.core.domain.model.OfferType
 
 /**
  * Card component for displaying a real estate listing.

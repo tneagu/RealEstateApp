@@ -1,4 +1,4 @@
-package com.tneagu.realestateapp.features.listings.domain.model
+package com.tneagu.realestateapp.core.domain.model
 
 /**
  * Represents the type of real estate offer.

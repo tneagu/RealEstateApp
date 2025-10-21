@@ -20,13 +20,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tneagu.realestateapp.core.domain.model.DomainError
+import com.tneagu.realestateapp.core.domain.model.OfferType
 import com.tneagu.realestateapp.core.ui.components.EmptyView
 import com.tneagu.realestateapp.core.ui.components.ErrorView
 import com.tneagu.realestateapp.core.ui.components.LoadingView
 import com.tneagu.realestateapp.core.ui.theme.RealEstateAppTheme
 import com.tneagu.realestateapp.core.ui.theme.Spacing
 import com.tneagu.realestateapp.features.listings.domain.model.Listing
-import com.tneagu.realestateapp.features.listings.domain.model.OfferType
 import com.tneagu.realestateapp.features.listings.presentation.mvi.ListingsIntent
 import com.tneagu.realestateapp.features.listings.presentation.mvi.ListingsState
 import com.tneagu.realestateapp.features.listings.presentation.ui.components.ListingCard

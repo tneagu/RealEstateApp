@@ -3,7 +3,7 @@ package com.tneagu.realestateapp.features.listings.domain.usecase
 import com.tneagu.realestateapp.core.domain.model.DataResult
 import com.tneagu.realestateapp.core.domain.model.DomainError
 import com.tneagu.realestateapp.features.listings.domain.model.Listing
-import com.tneagu.realestateapp.features.listings.domain.model.OfferType
+import com.tneagu.realestateapp.core.domain.model.OfferType
 import com.tneagu.realestateapp.features.listings.domain.repository.ListingsRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
