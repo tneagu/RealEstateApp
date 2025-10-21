@@ -1,16 +1,8 @@
 package com.tneagu.realestateapp.features.listingdetails.presentation.ui
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -18,30 +10,28 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil.compose.AsyncImage
 import com.tneagu.realestateapp.core.domain.model.DomainError
 import com.tneagu.realestateapp.core.ui.components.ErrorView
 import com.tneagu.realestateapp.core.ui.components.LoadingView
 import com.tneagu.realestateapp.features.listingdetails.R
-import com.tneagu.realestateapp.features.listingdetails.domain.model.ListingDetail
 import com.tneagu.realestateapp.features.listingdetails.presentation.mvi.ListingDetailsEffect
 import com.tneagu.realestateapp.features.listingdetails.presentation.mvi.ListingDetailsIntent
 import com.tneagu.realestateapp.features.listingdetails.presentation.mvi.ListingDetailsState
+import com.tneagu.realestateapp.features.listingdetails.presentation.ui.components.ListingDetailsContent
+import com.tneagu.realestateapp.features.listingdetails.presentation.ui.preview.sampleListingDetailMinimal
+import com.tneagu.realestateapp.features.listingdetails.presentation.ui.preview.sampleListingDetailRent
+import com.tneagu.realestateapp.features.listingdetails.presentation.ui.preview.sampleListingDetailSale
 import com.tneagu.realestateapp.features.listingdetails.presentation.viewmodel.ListingDetailsViewModel
 import com.tneagu.realestateapp.core.ui.R as CoreUiR
 
@@ -143,125 +133,132 @@ private fun getErrorMessage(error: DomainError): String {
     }
 }
 
+// ========================================
+// Previews - Full Screen (Stateless)
+// ========================================
+
+/**
+ * Stateless version of ListingDetailsScreen for previewing different states.
+ * Does not require ViewModel, making it suitable for Compose previews.
+ */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ListingDetailsContent(
-    detail: ListingDetail,
+private fun ListingDetailsScreenPreview(
+    state: ListingDetailsState,
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-    ) {
-        // Hero Image
-        AsyncImage(
-            model = detail.imageUrl,
-            contentDescription = detail.propertyType,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(250.dp),
-            contentScale = ContentScale.Crop
-        )
-
-        // Property Information
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            // Title
-            Text(
-                text = "${detail.propertyType} in ${detail.city}",
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Bold
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // Price and Offer Type
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "€${detail.price}",
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.primary,
-                    fontWeight = FontWeight.Bold
+    Scaffold(
+        modifier = modifier,
+        topBar = {
+            TopAppBar(
+                title = { Text(stringResource(R.string.listing_details_title)) },
+                navigationIcon = {
+                    IconButton(onClick = { }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.listing_details_back)
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                    navigationIconContentColor = MaterialTheme.colorScheme.onPrimary
                 )
+            )
+        }
+    ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            when (state) {
+                ListingDetailsState.NotInitialized -> {
+                    // Show nothing
+                }
 
-                Surface(
-                    color = if (detail.offerType == com.tneagu.realestateapp.core.domain.model.OfferType.RENT) {
-                        MaterialTheme.colorScheme.secondaryContainer
-                    } else {
-                        MaterialTheme.colorScheme.tertiaryContainer
-                    },
-                    shape = MaterialTheme.shapes.small
-                ) {
-                    Text(
-                        text = detail.offerType.name,
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-                        style = MaterialTheme.typography.labelMedium,
-                        fontWeight = FontWeight.SemiBold
+                ListingDetailsState.Loading -> {
+                    LoadingView(message = stringResource(R.string.listing_details_loading))
+                }
+
+                is ListingDetailsState.Success -> {
+                    ListingDetailsContent(detail = state.detail)
+                }
+
+                is ListingDetailsState.Error -> {
+                    ErrorView(
+                        message = when (state.error) {
+                            is DomainError.NetworkUnavailable -> "No network connection"
+                            is DomainError.ServerError -> "Server error"
+                            is DomainError.UnknownError -> "Unknown error"
+                        },
+                        onRetry = { }
                     )
                 }
             }
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            // Property Details Section
-            Text(
-                text = stringResource(R.string.listing_details_section_details),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            // Property Details Grid
-            PropertyDetailRow(label = "Bedrooms", value = detail.bedrooms?.toString() ?: "N/A")
-            PropertyDetailRow(label = "Rooms", value = detail.rooms?.toString() ?: "N/A")
-            PropertyDetailRow(label = "Area", value = "${detail.area} m²")
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            // Agent Section
-            Text(
-                text = stringResource(R.string.listing_details_section_agent),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            Text(
-                text = detail.professional,
-                style = MaterialTheme.typography.bodyLarge
-            )
         }
     }
 }
 
+@Preview(name = "Screen - Loading", showBackground = true)
 @Composable
-private fun PropertyDetailRow(
-    label: String,
-    value: String,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Text(
-            text = label,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+private fun ListingDetailsScreenLoadingPreview() {
+    com.tneagu.realestateapp.core.ui.theme.RealEstateAppTheme {
+        ListingDetailsScreenPreview(state = ListingDetailsState.Loading)
+    }
+}
+
+@Preview(name = "Screen - Success Rent", showBackground = true)
+@Composable
+private fun ListingDetailsScreenSuccessRentPreview() {
+    com.tneagu.realestateapp.core.ui.theme.RealEstateAppTheme {
+        ListingDetailsScreenPreview(
+            state = ListingDetailsState.Success(sampleListingDetailRent)
         )
-        Text(
-            text = value,
-            style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.Medium
+    }
+}
+
+@Preview(name = "Screen - Success Sale", showBackground = true)
+@Composable
+private fun ListingDetailsScreenSuccessSalePreview() {
+    com.tneagu.realestateapp.core.ui.theme.RealEstateAppTheme {
+        ListingDetailsScreenPreview(
+            state = ListingDetailsState.Success(sampleListingDetailSale)
+        )
+    }
+}
+
+@Preview(name = "Screen - Success Minimal", showBackground = true)
+@Composable
+private fun ListingDetailsScreenSuccessMinimalPreview() {
+    com.tneagu.realestateapp.core.ui.theme.RealEstateAppTheme {
+        ListingDetailsScreenPreview(
+            state = ListingDetailsState.Success(sampleListingDetailMinimal)
+        )
+    }
+}
+
+@Preview(name = "Screen - Error Network", showBackground = true)
+@Composable
+private fun ListingDetailsScreenErrorNetworkPreview() {
+    com.tneagu.realestateapp.core.ui.theme.RealEstateAppTheme {
+        ListingDetailsScreenPreview(
+            state = ListingDetailsState.Error(
+                DomainError.NetworkUnavailable("No connection available")
+            )
+        )
+    }
+}
+
+@Preview(name = "Screen - Error Server", showBackground = true)
+@Composable
+private fun ListingDetailsScreenErrorServerPreview() {
+    com.tneagu.realestateapp.core.ui.theme.RealEstateAppTheme {
+        ListingDetailsScreenPreview(
+            state = ListingDetailsState.Error(
+                DomainError.ServerError("Server returned 500 error")
+            )
         )
     }
 }
