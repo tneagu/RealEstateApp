@@ -1,6 +1,6 @@
 package com.tneagu.realestateapp.features.listings.domain.repository
 
-import com.tneagu.realestateapp.core.network.model.ApiResult
+import com.tneagu.realestateapp.core.domain.model.DataResult
 import com.tneagu.realestateapp.features.listings.domain.model.Listing
 
 /**
@@ -12,7 +12,7 @@ interface ListingsRepository {
     /**
      * Fetches all listings from the API.
      *
-     * @return ApiResult containing a list of Listing domain models or an error.
+     * @return DataResult containing a list of Listing domain models or a domain error.
      */
-    suspend fun getListings(): ApiResult<List<Listing>>
+    suspend fun getListings(): DataResult<List<Listing>>
 }

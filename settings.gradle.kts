@@ -22,5 +22,6 @@ dependencyResolutionManagement {
 rootProject.name = "RealEstateApp"
 include(":app")
 include(":core:network")
+include(":core:domain")
 include(":features:listings")
 include(":features:listingdetails")

@@ -43,6 +43,7 @@ android {
 dependencies {
     // Modules
     implementation(project(":core:network"))
+    implementation(project(":core:domain"))
 
     // Core Android
     implementation(libs.androidx.core.ktx)
