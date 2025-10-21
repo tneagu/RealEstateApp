@@ -70,7 +70,7 @@ fun AppNavHost(
         // Listings screen - shows list of properties
         composable(route = Route.Listings.route) {
             ListingsScreen(
-                onListingClick = { listingId ->
+                navigateToListingDetails = { listingId ->
                     navController.navigate(Route.ListingDetails.createRoute(listingId))
                 }
             )

@@ -40,6 +40,7 @@ class ListingsViewModel @Inject constructor(
         when (intent) {
             ListingsIntent.LoadListings -> loadListings()
             ListingsIntent.Retry -> loadListings()
+            is ListingsIntent.OnListingClick -> navigateToDetails(intent.listingId)
         }
     }
 
@@ -55,6 +56,12 @@ class ListingsViewModel @Inject constructor(
                     _state.value = ListingsState.Error(result.error)
                 }
             }
+        }
+    }
+
+    private fun navigateToDetails(listingId: Int) {
+        viewModelScope.launch {
+            _effect.send(ListingsEffect.NavigateToDetails(listingId))
         }
     }
 }

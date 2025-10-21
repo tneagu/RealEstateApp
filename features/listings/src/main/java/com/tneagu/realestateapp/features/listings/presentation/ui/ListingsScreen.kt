@@ -28,6 +28,7 @@ import com.tneagu.realestateapp.core.ui.components.LoadingView
 import com.tneagu.realestateapp.core.ui.theme.RealEstateAppTheme
 import com.tneagu.realestateapp.core.ui.theme.Spacing
 import com.tneagu.realestateapp.features.listings.domain.model.Listing
+import com.tneagu.realestateapp.features.listings.presentation.mvi.ListingsEffect
 import com.tneagu.realestateapp.features.listings.presentation.mvi.ListingsIntent
 import com.tneagu.realestateapp.features.listings.presentation.mvi.ListingsState
 import com.tneagu.realestateapp.features.listings.presentation.ui.components.ListingCard
@@ -38,14 +39,14 @@ import com.tneagu.realestateapp.features.listings.R
 /**
  * Main listings screen that displays a list of real estate listings.
  *
- * @param onListingClick Callback invoked when a listing is clicked.
+ * @param navigateToListingDetails Callback invoked when navigating to listing details.
  * @param viewModel The ViewModel that manages the screen state.
  * @param modifier Modifier to be applied to the root element.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListingsScreen(
-    onListingClick: (Int) -> Unit,
+    navigateToListingDetails: (Int) -> Unit,
     viewModel: ListingsViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
@@ -55,6 +56,20 @@ fun ListingsScreen(
     LaunchedEffect(Unit) {
         if (state is ListingsState.NotInitialized) {
             viewModel.handleIntent(ListingsIntent.LoadListings)
+        }
+    }
+
+    // Collect effects
+    LaunchedEffect(Unit) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
+                is ListingsEffect.NavigateToDetails -> {
+                    navigateToListingDetails(effect.listingId)
+                }
+                is ListingsEffect.ShowError -> {
+                    // Handle error effect if needed
+                }
+            }
         }
     }
 
@@ -96,7 +111,9 @@ fun ListingsScreen(
                 } else {
                     ListingsContent(
                         listings = currentState.listings,
-                        onListingClick = onListingClick,
+                        onListingClick = { listingId ->
+                            viewModel.handleIntent(ListingsIntent.OnListingClick(listingId))
+                        },
                         modifier = Modifier.padding(paddingValues)
                     )
                 }

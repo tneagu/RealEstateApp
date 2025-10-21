@@ -16,4 +16,9 @@ sealed interface ListingsIntent {
      * Intent to retry loading listings after an error occurred.
      */
     data object Retry : ListingsIntent
+
+    /**
+     * Intent triggered when user clicks on a listing.
+     */
+    data class OnListingClick(val listingId: Int) : ListingsIntent
 }
