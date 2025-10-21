@@ -1,0 +1,9 @@
+<resources>
+    <!-- Listing Details Feature Specific Strings -->
+    <string name="listing_details_title">Property Details</string>
+    <string name="listing_details_loading">Loading property details…</string>
+    <string name="listing_details_section_overview">Overview</string>
+    <string name="listing_details_section_details">Property Information</string>
+    <string name="listing_details_section_agent">Listed By</string>
+    <string name="listing_details_back">Back</string>
+</resources>
