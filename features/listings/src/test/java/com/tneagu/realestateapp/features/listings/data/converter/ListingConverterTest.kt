@@ -2,9 +2,12 @@ package com.tneagu.realestateapp.features.listings.data.converter
 
 import com.tneagu.realestateapp.features.listings.data.dto.ListingDto
 import com.tneagu.realestateapp.features.listings.domain.model.Listing
+import com.tneagu.realestateapp.features.listings.domain.model.OfferType
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 class ListingConverterTest {
 
@@ -15,8 +18,16 @@ class ListingConverterTest {
         classUnderTest = ListingConverter()
     }
 
-    @Test
-    fun `convert dto with all fields populated`() {
+    @ParameterizedTest
+    @CsvSource(
+        "1, RENT",
+        "2, SALE",
+        "3, UNKNOWN"
+    )
+    fun `convert dto with all fields populated`(
+        offerTypeInt: Int,
+        expectedOfferType: OfferType
+    ) {
         // Given
         val dto = ListingDto(
             id = 1,
@@ -27,7 +38,7 @@ class ListingConverterTest {
             price = 450000.0,
             professional = "Real Estate Pro",
             propertyType = "Apartment",
-            offerType = 1,
+            offerType = offerTypeInt,
             rooms = 5
         )
 
@@ -44,6 +55,7 @@ class ListingConverterTest {
             price = 450000.0,
             professional = "Real Estate Pro",
             propertyType = "Apartment",
+            offerType = expectedOfferType,
             rooms = 5
         )
         assertEquals(expected, result)
@@ -78,6 +90,7 @@ class ListingConverterTest {
             price = 250000.0,
             professional = "Another Pro",
             propertyType = "House",
+            offerType = OfferType.SALE,
             rooms = null
         )
         assertEquals(expected, result)

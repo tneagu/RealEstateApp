@@ -3,6 +3,7 @@ package com.tneagu.realestateapp.features.listings.data.converter
 import com.tneagu.realestateapp.features.listings.data.dto.ListingDto
 import com.tneagu.realestateapp.features.listings.data.dto.ListingsResponseDto
 import com.tneagu.realestateapp.features.listings.domain.model.Listing
+import com.tneagu.realestateapp.features.listings.domain.model.OfferType
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -49,6 +50,7 @@ class ListingsResponseConverterTest {
             price = 300000.0,
             professional = "Pro Agent",
             propertyType = "Flat",
+            offerType = OfferType.RENT,
             rooms = 3
         )
 

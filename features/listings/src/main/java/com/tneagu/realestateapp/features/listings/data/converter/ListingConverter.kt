@@ -2,6 +2,7 @@ package com.tneagu.realestateapp.features.listings.data.converter
 
 import com.tneagu.realestateapp.features.listings.data.dto.ListingDto
 import com.tneagu.realestateapp.features.listings.domain.model.Listing
+import com.tneagu.realestateapp.features.listings.domain.model.OfferType
 
 /**
  * Converter class to transform [ListingDto] to [Listing] domain model.
@@ -24,6 +25,7 @@ internal class ListingConverter {
             price = dto.price,
             professional = dto.professional,
             propertyType = dto.propertyType,
+            offerType = OfferType.fromInt(dto.offerType),
             rooms = dto.rooms
         )
     }
