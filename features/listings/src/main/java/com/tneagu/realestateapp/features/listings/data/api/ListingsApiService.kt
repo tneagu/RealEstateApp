@@ -6,7 +6,7 @@ import retrofit2.http.GET
 /**
  * Retrofit API service for listings endpoints.
  */
-interface ListingsApiService {
+internal interface ListingsApiService {
 
     @GET("listings.json")
     suspend fun getListings(): ListingsResponseDto

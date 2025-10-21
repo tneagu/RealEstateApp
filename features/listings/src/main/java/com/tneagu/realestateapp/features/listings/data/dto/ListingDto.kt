@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
  * Data Transfer Object for a single listing from the API.
  */
 @JsonClass(generateAdapter = true)
-data class ListingDto(
+internal data class ListingDto(
     val id: Int,
     val bedrooms: Int?,
     val city: String,

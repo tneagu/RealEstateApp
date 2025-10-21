@@ -7,7 +7,7 @@ import javax.inject.Inject
 /**
  * Converter class to transform ListingsResponseDto to a list of Listing domain models.
  */
-class ListingsResponseConverter @Inject constructor(
+internal class ListingsResponseConverter @Inject constructor(
     private val listingConverter: ListingConverter
 ) {
 

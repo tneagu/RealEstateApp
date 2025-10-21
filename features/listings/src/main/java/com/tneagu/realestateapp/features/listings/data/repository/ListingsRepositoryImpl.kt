@@ -14,7 +14,7 @@ import javax.inject.Inject
  * Implementation of ListingsRepository.
  * Handles API calls and maps infrastructure errors to domain errors.
  */
-class ListingsRepositoryImpl @Inject constructor(
+internal class ListingsRepositoryImpl @Inject constructor(
     private val apiService: ListingsApiService,
     private val converter: ListingsResponseConverter
 ) : ListingsRepository {

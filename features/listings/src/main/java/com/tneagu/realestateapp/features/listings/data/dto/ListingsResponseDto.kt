@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
  * Data Transfer Object for the listings API response.
  */
 @JsonClass(generateAdapter = true)
-data class ListingsResponseDto(
+internal data class ListingsResponseDto(
     val items: List<ListingDto>,
     val totalCount: Int
 )

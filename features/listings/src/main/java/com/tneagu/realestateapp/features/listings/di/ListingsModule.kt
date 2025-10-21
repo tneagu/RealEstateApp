@@ -5,6 +5,7 @@ import com.tneagu.realestateapp.features.listings.data.converter.ListingConverte
 import com.tneagu.realestateapp.features.listings.data.converter.ListingsResponseConverter
 import com.tneagu.realestateapp.features.listings.data.repository.ListingsRepositoryImpl
 import com.tneagu.realestateapp.features.listings.domain.repository.ListingsRepository
+import com.tneagu.realestateapp.features.listings.domain.usecase.GetListingsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,27 +20,34 @@ import retrofit2.Retrofit
 object ListingsModule {
 
     @Provides
-    fun provideListingsApiService(retrofit: Retrofit): ListingsApiService {
+    internal fun provideListingsApiService(retrofit: Retrofit): ListingsApiService {
         return retrofit.create(ListingsApiService::class.java)
     }
 
     @Provides
-    fun provideListingConverter(): ListingConverter {
+    internal fun provideListingConverter(): ListingConverter {
         return ListingConverter()
     }
 
     @Provides
-    fun provideListingsResponseConverter(
+    internal fun provideListingsResponseConverter(
         listingConverter: ListingConverter
     ): ListingsResponseConverter {
         return ListingsResponseConverter(listingConverter)
     }
 
     @Provides
-    fun provideListingsRepository(
+    internal fun provideListingsRepository(
         apiService: ListingsApiService,
         converter: ListingsResponseConverter
     ): ListingsRepository {
         return ListingsRepositoryImpl(apiService, converter)
+    }
+
+    @Provides
+    fun provideGetListingsUseCase(
+        repository: ListingsRepository
+    ): GetListingsUseCase {
+        return GetListingsUseCase(repository)
     }
 }

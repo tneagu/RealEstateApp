@@ -6,7 +6,7 @@ import com.tneagu.realestateapp.features.listings.domain.model.Listing
 /**
  * Converter class to transform [ListingDto] to [Listing] domain model.
  */
-class ListingConverter {
+internal class ListingConverter {
 
     /**
      * Converts a [ListingDto] to a [Listing] domain model.
