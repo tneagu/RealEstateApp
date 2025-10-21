@@ -1,0 +1,6 @@
+<resources>
+    <!-- Common Error Messages -->
+    <string name="error_network">No internet connection. Please check your network and try again.</string>
+    <string name="error_server">Server error occurred. Please try again later.</string>
+    <string name="error_unknown">An unexpected error occurred. Please try again.</string>
+</resources>

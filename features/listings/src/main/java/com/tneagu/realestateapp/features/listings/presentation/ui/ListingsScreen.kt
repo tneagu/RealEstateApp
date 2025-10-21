@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -31,6 +32,8 @@ import com.tneagu.realestateapp.features.listings.presentation.mvi.ListingsInten
 import com.tneagu.realestateapp.features.listings.presentation.mvi.ListingsState
 import com.tneagu.realestateapp.features.listings.presentation.ui.components.ListingCard
 import com.tneagu.realestateapp.features.listings.presentation.viewmodel.ListingsViewModel
+import com.tneagu.realestateapp.core.ui.R as CoreUiR
+import com.tneagu.realestateapp.features.listings.R
 
 /**
  * Main listings screen that displays a list of real estate listings.
@@ -61,7 +64,7 @@ fun ListingsScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Real Estate Listings",
+                        text = stringResource(R.string.listings_screen_title),
                         style = MaterialTheme.typography.titleLarge
                     )
                 },
@@ -80,14 +83,14 @@ fun ListingsScreen(
             is ListingsState.Loading -> {
                 LoadingView(
                     modifier = Modifier.padding(paddingValues),
-                    message = "Loading listings..."
+                    message = stringResource(R.string.listings_loading)
                 )
             }
 
             is ListingsState.Success -> {
                 if (currentState.listings.isEmpty()) {
                     EmptyView(
-                        message = "No listings available",
+                        message = stringResource(R.string.listings_empty),
                         modifier = Modifier.padding(paddingValues)
                     )
                 } else {
@@ -139,16 +142,17 @@ private fun ListingsContent(
 /**
  * Converts domain error to user-friendly message.
  */
+@Composable
 private fun getErrorMessage(error: DomainError): String {
     return when (error) {
         is DomainError.NetworkUnavailable -> {
-            error.message ?: "No internet connection. Please check your network and try again."
+            error.message ?: stringResource(CoreUiR.string.error_network)
         }
         is DomainError.ServerError -> {
-            error.message ?: "Server error occurred. Please try again later."
+            error.message ?: stringResource(CoreUiR.string.error_server)
         }
         is DomainError.UnknownError -> {
-            error.message ?: "An unexpected error occurred. Please try again."
+            error.message ?: stringResource(CoreUiR.string.error_unknown)
         }
     }
 }

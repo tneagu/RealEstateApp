@@ -1,0 +1,6 @@
+<resources>
+    <!-- Listings Feature Specific Strings -->
+    <string name="listings_screen_title">Real Estate Listings</string>
+    <string name="listings_loading">Loading listings…</string>
+    <string name="listings_empty">No listings available</string>
+</resources>
