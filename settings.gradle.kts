@@ -23,5 +23,6 @@ rootProject.name = "RealEstateApp"
 include(":app")
 include(":core:network")
 include(":core:domain")
+include(":core:ui")
 include(":features:listings")
 include(":features:listingdetails")

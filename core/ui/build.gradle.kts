@@ -2,12 +2,10 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.hilt)
-    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.tneagu.realestateapp.features.listings"
+    namespace = "com.tneagu.realestateapp.core.ui"
     compileSdk = 36
 
     defaultConfig {
@@ -38,23 +36,11 @@ android {
     buildFeatures {
         compose = true
     }
-    testOptions {
-        unitTests.all {
-            it.useJUnitPlatform()
-        }
-    }
 }
 
 dependencies {
-    // Modules
-    implementation(project(":core:network"))
-    implementation(project(":core:domain"))
-    implementation(project(":core:ui"))
-
     // Core Android
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     // Compose
     implementation(platform(libs.androidx.compose.bom))
@@ -64,36 +50,6 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material.icons.core)
     implementation(libs.androidx.compose.material.icons.extended)
-
-    // Navigation
-    implementation(libs.androidx.navigation.compose)
-
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-    implementation(libs.hilt.navigation.compose)
-
-    // Networking
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.moshi)
-    implementation(libs.moshi)
-    implementation(libs.moshi.kotlin)
-
-    // Coroutines
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.coroutines.android)
-
-    // Image Loading
-    implementation(libs.coil.compose)
-
-    // Testing
-    testImplementation(libs.junit.jupiter.api)
-    testImplementation(libs.junit.jupiter.params)
-    testRuntimeOnly(libs.junit.jupiter.engine)
-    testRuntimeOnly(libs.junit.platform.launcher)
-    testImplementation(libs.mockk)
-    testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation(libs.turbine)
 
     // Debug
     debugImplementation(libs.androidx.compose.ui.tooling)

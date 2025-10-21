@@ -47,6 +47,7 @@ dependencies {
 
     // Modules
     implementation(project(":core:network"))
+    implementation(project(":core:ui"))
     implementation(project(":features:listings"))
     implementation(project(":features:listingdetails"))
 
@@ -82,6 +83,9 @@ dependencies {
     // Coroutines
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
+
+    // Image Loading
+    implementation(libs.coil.compose)
 
     // Testing
     testImplementation(libs.junit)
