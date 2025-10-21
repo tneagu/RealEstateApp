@@ -43,9 +43,6 @@ class ListingsViewModel @Inject constructor(
         }
     }
 
-    /**
-     * Loads listings from the use case and updates state accordingly.
-     */
     private fun loadListings() {
         viewModelScope.launch {
             _state.value = ListingsState.Loading

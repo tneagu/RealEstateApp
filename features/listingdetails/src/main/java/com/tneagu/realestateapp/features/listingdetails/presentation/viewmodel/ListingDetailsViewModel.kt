@@ -21,7 +21,6 @@ import javax.inject.Inject
 
 /**
  * ViewModel for the listing details screen implementing MVI pattern.
- * Manages UI state, handles user intents, and emits one-time effects.
  */
 @HiltViewModel
 class ListingDetailsViewModel @Inject constructor(
@@ -52,11 +51,6 @@ class ListingDetailsViewModel @Inject constructor(
         }
     }
 
-    /**
-     * Loads listing details from the use case and updates state accordingly.
-     *
-     * @param id The ID of the listing to load.
-     */
     private fun loadDetails(id: Int) {
         viewModelScope.launch {
             _state.value = ListingDetailsState.Loading
@@ -76,9 +70,6 @@ class ListingDetailsViewModel @Inject constructor(
         }
     }
 
-    /**
-     * Triggers navigation back to the previous screen.
-     */
     private fun navigateBack() {
         viewModelScope.launch {
             _effect.send(ListingDetailsEffect.NavigateBack)

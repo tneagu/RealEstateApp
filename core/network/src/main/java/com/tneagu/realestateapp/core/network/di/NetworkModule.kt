@@ -1,4 +1,4 @@
-package com.tneagu.realestateapp.di
+package com.tneagu.realestateapp.core.network.di
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -16,16 +16,11 @@ import javax.inject.Singleton
 
 /**
  * Hilt module providing network-related dependencies.
- * Critical: OkHttpClient MUST be provided as @Singleton to avoid resource leaks.
  */
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    /**
-     * Provides a singleton OkHttpClient instance.
-     * IMPORTANT: Must be @Singleton to prevent resource leaks and ensure proper connection pooling.
-     */
     @Provides
     @Singleton
     fun provideOkHttpClient(
@@ -39,10 +34,6 @@ object NetworkModule {
             .build()
     }
 
-    /**
-     * Provides HTTP logging interceptor for debugging network requests.
-     * Configured to log request/response bodies for debugging.
-     */
     @Provides
     @Singleton
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
@@ -51,9 +42,6 @@ object NetworkModule {
         }
     }
 
-    /**
-     * Provides Moshi instance for JSON parsing with Kotlin support.
-     */
     @Provides
     @Singleton
     fun provideMoshi(): Moshi {
@@ -62,9 +50,6 @@ object NetworkModule {
             .build()
     }
 
-    /**
-     * Provides Retrofit instance configured with base URL and Moshi converter.
-     */
     @Provides
     @Singleton
     fun provideRetrofit(

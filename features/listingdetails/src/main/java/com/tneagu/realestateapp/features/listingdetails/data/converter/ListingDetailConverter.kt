@@ -3,11 +3,12 @@ package com.tneagu.realestateapp.features.listingdetails.data.converter
 import com.tneagu.realestateapp.core.domain.model.OfferType
 import com.tneagu.realestateapp.features.listingdetails.data.dto.ListingDetailDto
 import com.tneagu.realestateapp.features.listingdetails.domain.model.ListingDetail
+import javax.inject.Inject
 
 /**
  * Converter class to transform [ListingDetailDto] to [ListingDetail] domain model.
  */
-internal class ListingDetailConverter {
+internal class ListingDetailConverter @Inject constructor() {
 
     /**
      * Converts a [ListingDetailDto] to a [ListingDetail] domain model.

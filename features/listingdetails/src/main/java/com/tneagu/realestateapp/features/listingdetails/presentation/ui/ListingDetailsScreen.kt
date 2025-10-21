@@ -133,10 +133,6 @@ private fun getErrorMessage(error: DomainError): String {
     }
 }
 
-// ========================================
-// Previews - Full Screen (Stateless)
-// ========================================
-
 /**
  * Stateless version of ListingDetailsScreen for previewing different states.
  * Does not require ViewModel, making it suitable for Compose previews.
@@ -235,18 +231,6 @@ private fun ListingDetailsScreenSuccessMinimalPreview() {
     com.tneagu.realestateapp.core.ui.theme.RealEstateAppTheme {
         ListingDetailsScreenPreview(
             state = ListingDetailsState.Success(sampleListingDetailMinimal)
-        )
-    }
-}
-
-@Preview(name = "Screen - Error Network", showBackground = true)
-@Composable
-private fun ListingDetailsScreenErrorNetworkPreview() {
-    com.tneagu.realestateapp.core.ui.theme.RealEstateAppTheme {
-        ListingDetailsScreenPreview(
-            state = ListingDetailsState.Error(
-                DomainError.NetworkUnavailable("No connection available")
-            )
         )
     }
 }
