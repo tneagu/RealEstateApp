@@ -7,9 +7,9 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
-import javax.inject.Singleton
 
 /**
  * Hilt module that provides dependencies for the listing details feature.
@@ -19,7 +19,6 @@ import javax.inject.Singleton
 abstract class ListingDetailsModule {
 
     @Binds
-    @Singleton
     internal abstract fun bindListingDetailsRepository(
         impl: ListingDetailsRepositoryImpl
     ): ListingDetailsRepository
