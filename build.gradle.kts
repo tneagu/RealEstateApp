@@ -75,7 +75,12 @@ tasks.register<JacocoReport>("jacocoAggregatedReport") {
                     "**/Hilt_*.*",
                     "**/*Hilt*.*",
                     "**/*_Impl.*",
-                    "**/*ComposableSingletons*.*"
+                    "**/*ComposableSingletons*.*",
+                    // Exclude UI layer (Composables - require UI tests, not unit tests)
+                    "**/ui/**/*.class",
+                    "**/preview/**/*.class",
+                    "**/*Activity*.class",
+                    "**/navigation/**/*.class"
                 )
             })
 
