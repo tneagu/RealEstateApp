@@ -24,15 +24,15 @@ import com.tneagu.realestateapp.core.ui.theme.Spacing
 @Composable
 fun LoadingView(
     modifier: Modifier = Modifier,
-    message: String? = null
+    message: String? = null,
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         CircularProgressIndicator(
-            color = MaterialTheme.colorScheme.primary
+            color = MaterialTheme.colorScheme.primary,
         )
 
         if (message != null) {
@@ -40,7 +40,7 @@ fun LoadingView(
                 text = message,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(top = Spacing.default)
+                modifier = Modifier.padding(top = Spacing.default),
             )
         }
     }

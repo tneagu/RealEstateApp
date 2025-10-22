@@ -7,7 +7,6 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 
@@ -17,11 +16,8 @@ import retrofit2.Retrofit
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class ListingDetailsModule {
-
     @Binds
-    internal abstract fun bindListingDetailsRepository(
-        impl: ListingDetailsRepositoryImpl
-    ): ListingDetailsRepository
+    internal abstract fun bindListingDetailsRepository(impl: ListingDetailsRepositoryImpl): ListingDetailsRepository
 
     companion object {
         @Provides

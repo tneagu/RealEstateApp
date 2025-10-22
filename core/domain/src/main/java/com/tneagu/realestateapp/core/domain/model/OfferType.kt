@@ -6,7 +6,8 @@ package com.tneagu.realestateapp.core.domain.model
 enum class OfferType {
     RENT,
     SALE,
-    UNKNOWN;
+    UNKNOWN,
+    ;
 
     companion object {
         /**

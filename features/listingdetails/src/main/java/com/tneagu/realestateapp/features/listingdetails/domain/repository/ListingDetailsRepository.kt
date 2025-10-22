@@ -9,7 +9,6 @@ import com.tneagu.realestateapp.features.listingdetails.domain.model.ListingDeta
  * This defines the contract for accessing detailed information about a specific listing.
  */
 interface ListingDetailsRepository {
-
     /**
      * Fetches detailed information for a specific listing.
      *

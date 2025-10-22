@@ -5,7 +5,6 @@ package com.tneagu.realestateapp.features.listings.presentation.mvi
  * These are events triggered by user interactions or screen lifecycle.
  */
 sealed interface ListingsIntent {
-
     /**
      * Intent to load the listings from the repository.
      * Triggered when the screen is first displayed or refreshed.

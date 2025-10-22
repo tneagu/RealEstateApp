@@ -49,7 +49,7 @@ fun ListingDetailsScreen(
     listingId: Int,
     onNavigateBack: () -> Unit,
     viewModel: ListingDetailsViewModel = hiltViewModel(),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -76,22 +76,24 @@ fun ListingDetailsScreen(
                     IconButton(onClick = { viewModel.handleIntent(ListingDetailsIntent.NavigateBack) }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.listing_details_back)
+                            contentDescription = stringResource(R.string.listing_details_back),
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onPrimary
-                )
+                colors =
+                    TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                        navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
+                    ),
             )
-        }
+        },
     ) { paddingValues ->
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
         ) {
             when (state) {
                 ListingDetailsState.NotInitialized -> {
@@ -104,14 +106,14 @@ fun ListingDetailsScreen(
 
                 is ListingDetailsState.Success -> {
                     ListingDetailsContent(
-                        detail = (state as ListingDetailsState.Success).detail
+                        detail = (state as ListingDetailsState.Success).detail,
                     )
                 }
 
                 is ListingDetailsState.Error -> {
                     ErrorView(
                         message = getErrorMessage((state as ListingDetailsState.Error).error),
-                        onRetry = { viewModel.handleIntent(ListingDetailsIntent.Retry) }
+                        onRetry = { viewModel.handleIntent(ListingDetailsIntent.Retry) },
                     )
                 }
             }
@@ -141,7 +143,7 @@ private fun getErrorMessage(error: DomainError): String {
 @Composable
 private fun ListingDetailsScreenPreview(
     state: ListingDetailsState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Scaffold(
         modifier = modifier,
@@ -152,22 +154,24 @@ private fun ListingDetailsScreenPreview(
                     IconButton(onClick = { }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.listing_details_back)
+                            contentDescription = stringResource(R.string.listing_details_back),
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onPrimary
-                )
+                colors =
+                    TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                        navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
+                    ),
             )
-        }
+        },
     ) { paddingValues ->
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
         ) {
             when (state) {
                 ListingDetailsState.NotInitialized -> {
@@ -184,12 +188,13 @@ private fun ListingDetailsScreenPreview(
 
                 is ListingDetailsState.Error -> {
                     ErrorView(
-                        message = when (state.error) {
-                            is DomainError.NetworkUnavailable -> "No network connection"
-                            is DomainError.ServerError -> "Server error"
-                            is DomainError.UnknownError -> "Unknown error"
-                        },
-                        onRetry = { }
+                        message =
+                            when (state.error) {
+                                is DomainError.NetworkUnavailable -> "No network connection"
+                                is DomainError.ServerError -> "Server error"
+                                is DomainError.UnknownError -> "Unknown error"
+                            },
+                        onRetry = { },
                     )
                 }
             }
@@ -210,7 +215,7 @@ private fun ListingDetailsScreenLoadingPreview() {
 private fun ListingDetailsScreenSuccessRentPreview() {
     com.tneagu.realestateapp.core.ui.theme.RealEstateAppTheme {
         ListingDetailsScreenPreview(
-            state = ListingDetailsState.Success(sampleListingDetailRent)
+            state = ListingDetailsState.Success(sampleListingDetailRent),
         )
     }
 }
@@ -220,7 +225,7 @@ private fun ListingDetailsScreenSuccessRentPreview() {
 private fun ListingDetailsScreenSuccessSalePreview() {
     com.tneagu.realestateapp.core.ui.theme.RealEstateAppTheme {
         ListingDetailsScreenPreview(
-            state = ListingDetailsState.Success(sampleListingDetailSale)
+            state = ListingDetailsState.Success(sampleListingDetailSale),
         )
     }
 }
@@ -230,7 +235,7 @@ private fun ListingDetailsScreenSuccessSalePreview() {
 private fun ListingDetailsScreenSuccessMinimalPreview() {
     com.tneagu.realestateapp.core.ui.theme.RealEstateAppTheme {
         ListingDetailsScreenPreview(
-            state = ListingDetailsState.Success(sampleListingDetailMinimal)
+            state = ListingDetailsState.Success(sampleListingDetailMinimal),
         )
     }
 }
@@ -240,9 +245,10 @@ private fun ListingDetailsScreenSuccessMinimalPreview() {
 private fun ListingDetailsScreenErrorServerPreview() {
     com.tneagu.realestateapp.core.ui.theme.RealEstateAppTheme {
         ListingDetailsScreenPreview(
-            state = ListingDetailsState.Error(
-                DomainError.ServerError("Server returned 500 error")
-            )
+            state =
+                ListingDetailsState.Error(
+                    DomainError.ServerError("Server returned 500 error"),
+                ),
         )
     }
 }

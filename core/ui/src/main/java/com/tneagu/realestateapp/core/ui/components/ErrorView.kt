@@ -32,20 +32,21 @@ import com.tneagu.realestateapp.core.ui.theme.Spacing
 fun ErrorView(
     message: String,
     onRetry: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(Spacing.large),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .padding(Spacing.large),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         Icon(
             imageVector = Icons.Default.Warning,
             contentDescription = "Error",
             tint = MaterialTheme.colorScheme.error,
-            modifier = Modifier.size(Dimensions.iconExtraLarge)
+            modifier = Modifier.size(Dimensions.iconExtraLarge),
         )
 
         Text(
@@ -53,10 +54,11 @@ fun ErrorView(
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center,
-            modifier = Modifier.padding(
-                top = Spacing.default,
-                bottom = Spacing.large
-            )
+            modifier =
+                Modifier.padding(
+                    top = Spacing.default,
+                    bottom = Spacing.large,
+                ),
         )
 
         Button(onClick = onRetry) {
@@ -71,7 +73,7 @@ private fun ErrorViewPreview() {
     RealEstateAppTheme {
         ErrorView(
             message = "Failed to load listings. Please check your internet connection and try again.",
-            onRetry = {}
+            onRetry = {},
         )
     }
 }

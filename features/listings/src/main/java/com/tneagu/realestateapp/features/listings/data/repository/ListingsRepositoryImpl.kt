@@ -14,33 +14,34 @@ import javax.inject.Inject
  * Implementation of ListingsRepository.
  * Handles API calls and maps infrastructure errors to domain errors.
  */
-internal class ListingsRepositoryImpl @Inject constructor(
-    private val apiService: ListingsApiService,
-    private val converter: ListingsResponseConverter
-) : ListingsRepository {
-
-    override suspend fun getListings(): DataResult<List<Listing>> {
-        return try {
-            val response = apiService.getListings()
-            DataResult.Success(converter.convert(response))
-        } catch (e: HttpException) {
-            DataResult.Failure(
-                DomainError.ServerError(
-                    message = "HTTP ${e.code()}: ${e.message()}"
+internal class ListingsRepositoryImpl
+    @Inject
+    constructor(
+        private val apiService: ListingsApiService,
+        private val converter: ListingsResponseConverter,
+    ) : ListingsRepository {
+        override suspend fun getListings(): DataResult<List<Listing>> {
+            return try {
+                val response = apiService.getListings()
+                DataResult.Success(converter.convert(response))
+            } catch (e: HttpException) {
+                DataResult.Failure(
+                    DomainError.ServerError(
+                        message = "HTTP ${e.code()}: ${e.message()}",
+                    ),
                 )
-            )
-        } catch (e: IOException) {
-            DataResult.Failure(
-                DomainError.NetworkUnavailable(
-                    message = e.message
+            } catch (e: IOException) {
+                DataResult.Failure(
+                    DomainError.NetworkUnavailable(
+                        message = e.message,
+                    ),
                 )
-            )
-        } catch (e: Exception) {
-            DataResult.Failure(
-                DomainError.UnknownError(
-                    message = "${e::class.simpleName}: ${e.message}"
+            } catch (e: Exception) {
+                DataResult.Failure(
+                    DomainError.UnknownError(
+                        message = "${e::class.simpleName}: ${e.message}",
+                    ),
                 )
-            )
+            }
         }
     }
-}

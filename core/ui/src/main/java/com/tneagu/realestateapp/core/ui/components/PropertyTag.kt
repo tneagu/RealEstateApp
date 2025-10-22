@@ -26,22 +26,23 @@ fun PropertyTag(
     text: String,
     modifier: Modifier = Modifier,
     containerColor: Color = MaterialTheme.colorScheme.secondaryContainer,
-    contentColor: Color = MaterialTheme.colorScheme.onSecondaryContainer
+    contentColor: Color = MaterialTheme.colorScheme.onSecondaryContainer,
 ) {
     Surface(
         modifier = modifier,
         shape = MaterialTheme.shapes.small,
         color = containerColor,
-        tonalElevation = Dimensions.cardElevation
+        tonalElevation = Dimensions.cardElevation,
     ) {
         Text(
             text = text,
             style = MaterialTheme.typography.labelSmall,
             color = contentColor,
-            modifier = Modifier.padding(
-                horizontal = Spacing.small,
-                vertical = Spacing.extraSmall
-            )
+            modifier =
+                Modifier.padding(
+                    horizontal = Spacing.small,
+                    vertical = Spacing.extraSmall,
+                ),
         )
     }
 }
@@ -61,7 +62,7 @@ private fun PropertyTagCustomColorPreview() {
         PropertyTag(
             text = "FOR RENT",
             containerColor = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
         )
     }
 }

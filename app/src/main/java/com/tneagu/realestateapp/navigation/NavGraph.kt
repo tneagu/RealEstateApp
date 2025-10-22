@@ -60,37 +60,38 @@ sealed interface Route {
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = Route.Listings.route
+    startDestination: String = Route.Listings.route,
 ) {
     NavHost(
         navController = navController,
         startDestination = startDestination,
-        modifier = modifier
+        modifier = modifier,
     ) {
         // Listings screen - shows list of properties
         composable(route = Route.Listings.route) {
             ListingsScreen(
                 navigateToListingDetails = { listingId ->
                     navController.navigate(Route.ListingDetails.createRoute(listingId))
-                }
+                },
             )
         }
 
         // Listing details screen - shows details for a specific property
         composable(
             route = Route.ListingDetails.routeWithArgs,
-            arguments = listOf(
-                navArgument(Route.ListingDetails.ARG_LISTING_ID) {
-                    type = NavType.IntType
-                }
-            )
+            arguments =
+                listOf(
+                    navArgument(Route.ListingDetails.ARG_LISTING_ID) {
+                        type = NavType.IntType
+                    },
+                ),
         ) { backStackEntry ->
             val listingId = backStackEntry.arguments?.getInt(Route.ListingDetails.ARG_LISTING_ID) ?: 0
             ListingDetailsScreen(
                 listingId = listingId,
                 onNavigateBack = {
                     navController.navigateUp()
-                }
+                },
             )
         }
     }

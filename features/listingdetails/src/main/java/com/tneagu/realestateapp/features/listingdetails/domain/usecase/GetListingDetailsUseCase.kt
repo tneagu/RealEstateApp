@@ -9,17 +9,18 @@ import javax.inject.Inject
 /**
  * Use case for fetching detailed information about a specific listing.
  */
-class GetListingDetailsUseCase @Inject constructor(
-    private val repository: ListingDetailsRepository
-) {
-
-    /**
-     * Fetches detailed information for a specific listing.
-     *
-     * @param listingId The unique identifier of the listing.
-     * @return [DataResult] containing either [ListingDetail] on success or a [DomainError] on failure.
-     */
-    suspend operator fun invoke(listingId: Int): DataResult<ListingDetail> {
-        return repository.getListingDetails(listingId)
+class GetListingDetailsUseCase
+    @Inject
+    constructor(
+        private val repository: ListingDetailsRepository,
+    ) {
+        /**
+         * Fetches detailed information for a specific listing.
+         *
+         * @param listingId The unique identifier of the listing.
+         * @return [DataResult] containing either [ListingDetail] on success or a [DomainError] on failure.
+         */
+        suspend operator fun invoke(listingId: Int): DataResult<ListingDetail> {
+            return repository.getListingDetails(listingId)
+        }
     }
-}

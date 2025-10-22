@@ -12,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class ListingsResponseConverterTest {
-
     private val listingConverter = mockk<ListingConverter>()
     private lateinit var classUnderTest: ListingsResponseConverter
 
@@ -24,35 +23,38 @@ class ListingsResponseConverterTest {
     @Test
     fun `convert response with single listing returns result from listing converter`() {
         // Given
-        val listingDto = ListingDto(
-            id = 1,
-            bedrooms = 2,
-            city = "Paris",
-            area = 75.0,
-            url = "https://example.com/image.jpg",
-            price = 300000.0,
-            professional = "Pro Agent",
-            propertyType = "Flat",
-            offerType = 1,
-            rooms = 3
-        )
-        val responseDto = ListingsResponseDto(
-            items = listOf(listingDto),
-            totalCount = 1
-        )
+        val listingDto =
+            ListingDto(
+                id = 1,
+                bedrooms = 2,
+                city = "Paris",
+                area = 75.0,
+                url = "https://example.com/image.jpg",
+                price = 300000.0,
+                professional = "Pro Agent",
+                propertyType = "Flat",
+                offerType = 1,
+                rooms = 3,
+            )
+        val responseDto =
+            ListingsResponseDto(
+                items = listOf(listingDto),
+                totalCount = 1,
+            )
 
-        val expectedListing = Listing(
-            id = 1,
-            bedrooms = 2,
-            city = "Paris",
-            area = 75.0,
-            imageUrl = "https://example.com/image.jpg",
-            price = 300000.0,
-            professional = "Pro Agent",
-            propertyType = "Flat",
-            offerType = OfferType.RENT,
-            rooms = 3
-        )
+        val expectedListing =
+            Listing(
+                id = 1,
+                bedrooms = 2,
+                city = "Paris",
+                area = 75.0,
+                imageUrl = "https://example.com/image.jpg",
+                price = 300000.0,
+                professional = "Pro Agent",
+                propertyType = "Flat",
+                offerType = OfferType.RENT,
+                rooms = 3,
+            )
 
         every { listingConverter.convert(listingDto) } returns expectedListing
 

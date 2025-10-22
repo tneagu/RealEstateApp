@@ -16,5 +16,5 @@ internal data class ListingDto(
     val professional: String,
     val propertyType: String,
     val offerType: Int,
-    val rooms: Int?
+    val rooms: Int?,
 )

@@ -8,7 +8,6 @@ import com.tneagu.realestateapp.features.listings.domain.model.Listing
  * Uses sealed interface for exhaustive when expressions and type safety.
  */
 sealed interface ListingsState {
-
     /**
      * Initial state before any data is loaded.
      */

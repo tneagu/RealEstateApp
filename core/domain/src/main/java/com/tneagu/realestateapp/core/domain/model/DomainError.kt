@@ -11,20 +11,20 @@ sealed interface DomainError {
      * Network is unavailable (no internet connection, timeout, etc.).
      */
     data class NetworkUnavailable(
-        override val message: String? = null
+        override val message: String? = null,
     ) : DomainError
 
     /**
      * Server returned an error response (4xx, 5xx).
      */
     data class ServerError(
-        override val message: String? = null
+        override val message: String? = null,
     ) : DomainError
 
     /**
      * An unexpected error occurred.
      */
     data class UnknownError(
-        override val message: String? = null
+        override val message: String? = null,
     ) : DomainError
 }

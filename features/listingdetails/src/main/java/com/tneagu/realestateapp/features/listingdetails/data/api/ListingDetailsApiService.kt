@@ -8,7 +8,6 @@ import retrofit2.http.Path
  * Retrofit API service for fetching listing details.
  */
 internal interface ListingDetailsApiService {
-
     /**
      * Fetches detailed information for a specific listing by ID.
      *
@@ -16,5 +15,7 @@ internal interface ListingDetailsApiService {
      * @return [ListingDetailDto] containing the listing details.
      */
     @GET("listings/{listingId}.json")
-    suspend fun getListingDetails(@Path("listingId") listingId: Int): ListingDetailDto
+    suspend fun getListingDetails(
+        @Path("listingId") listingId: Int,
+    ): ListingDetailDto
 }

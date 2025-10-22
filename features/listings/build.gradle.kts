@@ -24,7 +24,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -76,37 +76,41 @@ tasks.register<JacocoReport>("jacocoTestReport") {
         html.required.set(true)
     }
 
-    val fileFilter = listOf(
-        "**/R.class",
-        "**/R$*.class",
-        "**/BuildConfig.*",
-        "**/Manifest*.*",
-        "**/*Test*.*",
-        "android/**/*.*",
-        "**/*\$Lambda$*.*",
-        "**/*\$inlined$*.*",
-        "**/*Module.*",
-        "**/*Module\$*.*",
-        "**/*_Factory.*",
-        "**/*_MembersInjector.*",
-        "**/Hilt_*.*",
-        "**/*Hilt*.*",
-        "**/*_Impl.*",
-        "**/*ComposableSingletons*.*"
-    )
+    val fileFilter =
+        listOf(
+            "**/R.class",
+            "**/R$*.class",
+            "**/BuildConfig.*",
+            "**/Manifest*.*",
+            "**/*Test*.*",
+            "android/**/*.*",
+            "**/*\$Lambda$*.*",
+            "**/*\$inlined$*.*",
+            "**/*Module.*",
+            "**/*Module\$*.*",
+            "**/*_Factory.*",
+            "**/*_MembersInjector.*",
+            "**/Hilt_*.*",
+            "**/*Hilt*.*",
+            "**/*_Impl.*",
+            "**/*ComposableSingletons*.*",
+        )
 
-    val debugTree = fileTree("${layout.buildDirectory.get()}/tmp/kotlin-classes/debug") {
-        exclude(fileFilter)
-    }
+    val debugTree =
+        fileTree("${layout.buildDirectory.get()}/tmp/kotlin-classes/debug") {
+            exclude(fileFilter)
+        }
 
     val mainSrc = "${project.projectDir}/src/main/java"
     val mainSrcKotlin = "${project.projectDir}/src/main/kotlin"
 
     sourceDirectories.setFrom(files(listOf(mainSrc, mainSrcKotlin)))
     classDirectories.setFrom(files(listOf(debugTree)))
-    executionData.setFrom(fileTree(layout.buildDirectory.get()) {
-        include("**/*.exec", "**/*.ec")
-    })
+    executionData.setFrom(
+        fileTree(layout.buildDirectory.get()) {
+            include("**/*.exec", "**/*.ec")
+        },
+    )
 }
 
 dependencies {

@@ -22,7 +22,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -45,7 +45,7 @@ ktlint {
     ignoreFailures.set(false)
 }
 
-dependencies{
+dependencies {
     // Core Android
     implementation(libs.androidx.core.ktx)
 

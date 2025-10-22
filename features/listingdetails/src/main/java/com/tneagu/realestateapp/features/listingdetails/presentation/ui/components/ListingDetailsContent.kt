@@ -34,33 +34,35 @@ import com.tneagu.realestateapp.features.listingdetails.presentation.ui.preview.
 @Composable
 internal fun ListingDetailsContent(
     detail: ListingDetail,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+        modifier =
+            modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
     ) {
         // Hero Image
         AsyncImage(
             model = detail.imageUrl,
             contentDescription = detail.propertyType,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(250.dp),
-            contentScale = ContentScale.Crop
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .height(250.dp),
+            contentScale = ContentScale.Crop,
         )
 
         // Property Information
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
         ) {
             // Property Header (title, price, offer type badge)
             PropertyHeader(
                 propertyType = detail.propertyType,
                 city = detail.city,
                 price = detail.price,
-                offerType = detail.offerType
+                offerType = detail.offerType,
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -69,7 +71,7 @@ internal fun ListingDetailsContent(
             PropertyDetailsSection(
                 bedrooms = detail.bedrooms,
                 rooms = detail.rooms,
-                area = detail.area
+                area = detail.area,
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -78,14 +80,14 @@ internal fun ListingDetailsContent(
             Text(
                 text = stringResource(R.string.listing_details_section_agent),
                 style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
             )
 
             Spacer(modifier = Modifier.height(12.dp))
 
             Text(
                 text = detail.professional,
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyLarge,
             )
         }
     }

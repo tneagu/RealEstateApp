@@ -7,17 +7,18 @@ import javax.inject.Inject
 /**
  * Converter class to transform ListingsResponseDto to a list of Listing domain models.
  */
-internal class ListingsResponseConverter @Inject constructor(
-    private val listingConverter: ListingConverter
-) {
-
-    /**
-     * Converts a ListingsResponseDto to a list of Listing domain models.
-     *
-     * @param dto The DTO from the API response containing a list of listings.
-     * @return List of Listing domain models.
-     */
-    fun convert(dto: ListingsResponseDto): List<Listing> {
-        return dto.items.map { listingConverter.convert(it) }
+internal class ListingsResponseConverter
+    @Inject
+    constructor(
+        private val listingConverter: ListingConverter,
+    ) {
+        /**
+         * Converts a ListingsResponseDto to a list of Listing domain models.
+         *
+         * @param dto The DTO from the API response containing a list of listings.
+         * @return List of Listing domain models.
+         */
+        fun convert(dto: ListingsResponseDto): List<Listing> {
+            return dto.items.map { listingConverter.convert(it) }
+        }
     }
-}

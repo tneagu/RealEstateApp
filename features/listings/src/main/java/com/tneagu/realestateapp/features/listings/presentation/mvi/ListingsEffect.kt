@@ -5,7 +5,6 @@ package com.tneagu.realestateapp.features.listings.presentation.mvi
  * These are events that should be consumed once by the UI (e.g., showing a snackbar, navigation).
  */
 sealed interface ListingsEffect {
-
     /**
      * Effect to show an error message to the user.
      *

@@ -29,13 +29,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
-import java.util.Locale
+import com.tneagu.realestateapp.core.domain.model.OfferType
 import com.tneagu.realestateapp.core.ui.components.PropertyTag
 import com.tneagu.realestateapp.core.ui.theme.Dimensions
 import com.tneagu.realestateapp.core.ui.theme.RealEstateAppTheme
 import com.tneagu.realestateapp.core.ui.theme.Spacing
 import com.tneagu.realestateapp.features.listings.domain.model.Listing
-import com.tneagu.realestateapp.core.domain.model.OfferType
+import java.util.Locale
 
 /**
  * Card component for displaying a real estate listing.
@@ -48,65 +48,70 @@ import com.tneagu.realestateapp.core.domain.model.OfferType
 fun ListingCard(
     listing: Listing,
     onClick: (Int) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Card(
         onClick = { onClick(listing.id) },
         modifier = modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.medium,
-        elevation = CardDefaults.cardElevation(defaultElevation = Dimensions.cardElevation)
+        elevation = CardDefaults.cardElevation(defaultElevation = Dimensions.cardElevation),
     ) {
         Column {
             // Property Image
             AsyncImage(
                 model = listing.imageUrl ?: "",
                 contentDescription = "Property image for ${listing.propertyType} in ${listing.city}",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(Dimensions.listingImageAspectRatio)
-                    .clip(MaterialTheme.shapes.medium),
-                contentScale = ContentScale.Crop
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(Dimensions.listingImageAspectRatio)
+                        .clip(MaterialTheme.shapes.medium),
+                contentScale = ContentScale.Crop,
             )
 
             // Content Section
             Column(
-                modifier = Modifier.padding(Spacing.default)
+                modifier = Modifier.padding(Spacing.default),
             ) {
                 // Property Type Tag & Offer Type Badge
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     PropertyTag(
                         text = listing.propertyType,
                         containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                        contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+                        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
                     )
 
                     // Offer Type Badge
-                    val (badgeText, badgeColor, badgeContentColor) = when (listing.offerType) {
-                        OfferType.RENT -> Triple(
-                            "FOR RENT",
-                            MaterialTheme.colorScheme.primaryContainer,
-                            MaterialTheme.colorScheme.onPrimaryContainer
-                        )
-                        OfferType.SALE -> Triple(
-                            "FOR SALE",
-                            MaterialTheme.colorScheme.tertiaryContainer,
-                            MaterialTheme.colorScheme.onTertiaryContainer
-                        )
-                        OfferType.UNKNOWN -> Triple(
-                            "UNKNOWN",
-                            MaterialTheme.colorScheme.surfaceVariant,
-                            MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
+                    val (badgeText, badgeColor, badgeContentColor) =
+                        when (listing.offerType) {
+                            OfferType.RENT ->
+                                Triple(
+                                    "FOR RENT",
+                                    MaterialTheme.colorScheme.primaryContainer,
+                                    MaterialTheme.colorScheme.onPrimaryContainer,
+                                )
+                            OfferType.SALE ->
+                                Triple(
+                                    "FOR SALE",
+                                    MaterialTheme.colorScheme.tertiaryContainer,
+                                    MaterialTheme.colorScheme.onTertiaryContainer,
+                                )
+                            OfferType.UNKNOWN ->
+                                Triple(
+                                    "UNKNOWN",
+                                    MaterialTheme.colorScheme.surfaceVariant,
+                                    MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                        }
 
                     PropertyTag(
                         text = badgeText,
                         containerColor = badgeColor,
-                        contentColor = badgeContentColor
+                        contentColor = badgeContentColor,
                     )
                 }
 
@@ -117,26 +122,26 @@ fun ListingCard(
                     text = "€${String.format(Locale.getDefault(), "%,.0f", listing.price)}",
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
+                    color = MaterialTheme.colorScheme.primary,
                 )
 
                 Spacer(modifier = Modifier.height(Spacing.extraSmall))
 
                 // Location
                 Row(
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(
                         imageVector = Icons.Default.LocationOn,
                         contentDescription = "Location",
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.size(Dimensions.iconSmall)
+                        modifier = Modifier.size(Dimensions.iconSmall),
                     )
                     Spacer(modifier = Modifier.width(Spacing.extraSmall))
                     Text(
                         text = listing.city,
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
 
@@ -145,13 +150,13 @@ fun ListingCard(
                 // Details Row (Bedrooms, Rooms, Area)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.medium),
                 ) {
                     // Bedrooms
                     if (listing.bedrooms != null) {
                         PropertyDetail(
                             icon = Icons.Default.Bed,
-                            value = "${listing.bedrooms} bed${if (listing.bedrooms > 1) "s" else ""}"
+                            value = "${listing.bedrooms} bed${if (listing.bedrooms > 1) "s" else ""}",
                         )
                     }
 
@@ -159,14 +164,14 @@ fun ListingCard(
                     if (listing.rooms != null) {
                         PropertyDetail(
                             icon = Icons.Default.MeetingRoom,
-                            value = "${listing.rooms} room${if (listing.rooms > 1) "s" else ""}"
+                            value = "${listing.rooms} room${if (listing.rooms > 1) "s" else ""}",
                         )
                     }
 
                     // Area
                     PropertyDetail(
                         icon = Icons.Default.SquareFoot,
-                        value = "${String.format(Locale.getDefault(), "%.1f", listing.area)} m²"
+                        value = "${String.format(Locale.getDefault(), "%.1f", listing.area)} m²",
                     )
                 }
 
@@ -178,7 +183,7 @@ fun ListingCard(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
                 )
             }
         }
@@ -192,23 +197,23 @@ fun ListingCard(
 private fun PropertyDetail(
     icon: androidx.compose.ui.graphics.vector.ImageVector,
     value: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
             imageVector = icon,
             contentDescription = null,
             tint = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.size(Dimensions.iconSmall)
+            modifier = Modifier.size(Dimensions.iconSmall),
         )
         Spacer(modifier = Modifier.width(Spacing.extraSmall))
         Text(
             text = value,
             style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
 }
@@ -218,19 +223,20 @@ private fun PropertyDetail(
 private fun ListingCardPreview() {
     RealEstateAppTheme {
         ListingCard(
-            listing = Listing(
-                id = 1,
-                bedrooms = 3,
-                city = "Paris",
-                area = 120.5,
-                imageUrl = null,
-                price = 450000.0,
-                professional = "Real Estate Pro",
-                propertyType = "Apartment",
-                offerType = OfferType.RENT,
-                rooms = 5
-            ),
-            onClick = {}
+            listing =
+                Listing(
+                    id = 1,
+                    bedrooms = 3,
+                    city = "Paris",
+                    area = 120.5,
+                    imageUrl = null,
+                    price = 450000.0,
+                    professional = "Real Estate Pro",
+                    propertyType = "Apartment",
+                    offerType = OfferType.RENT,
+                    rooms = 5,
+                ),
+            onClick = {},
         )
     }
 }
@@ -240,19 +246,20 @@ private fun ListingCardPreview() {
 private fun ListingCardForSalePreview() {
     RealEstateAppTheme {
         ListingCard(
-            listing = Listing(
-                id = 2,
-                bedrooms = 4,
-                city = "Lyon",
-                area = 200.0,
-                imageUrl = null,
-                price = 850000.0,
-                professional = "Premium Properties",
-                propertyType = "House",
-                offerType = OfferType.SALE,
-                rooms = 7
-            ),
-            onClick = {}
+            listing =
+                Listing(
+                    id = 2,
+                    bedrooms = 4,
+                    city = "Lyon",
+                    area = 200.0,
+                    imageUrl = null,
+                    price = 850000.0,
+                    professional = "Premium Properties",
+                    propertyType = "House",
+                    offerType = OfferType.SALE,
+                    rooms = 7,
+                ),
+            onClick = {},
         )
     }
 }

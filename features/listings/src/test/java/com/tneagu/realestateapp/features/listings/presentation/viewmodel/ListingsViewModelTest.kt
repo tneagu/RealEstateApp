@@ -27,7 +27,6 @@ import org.junit.jupiter.api.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ListingsViewModelTest {
-
     private lateinit var classUnderTest: ListingsViewModel
     private val getListingsUseCase = mockk<GetListingsUseCase>()
 
@@ -45,189 +44,196 @@ class ListingsViewModelTest {
     }
 
     // Test Data
-    private val sampleListings = listOf(
-        Listing(
-            id = 1,
-            bedrooms = 3,
-            city = "Paris",
-            area = 120.5,
-            imageUrl = "https://example.com/image1.jpg",
-            price = 450000.0,
-            professional = "Real Estate Pro",
-            propertyType = "Apartment",
-            offerType = OfferType.RENT,
-            rooms = 5
-        ),
-        Listing(
-            id = 2,
-            bedrooms = 2,
-            city = "Lyon",
-            area = 80.0,
-            imageUrl = "https://example.com/image2.jpg",
-            price = 300000.0,
-            professional = "Property Expert",
-            propertyType = "House",
-            offerType = OfferType.SALE,
-            rooms = 4
+    private val sampleListings =
+        listOf(
+            Listing(
+                id = 1,
+                bedrooms = 3,
+                city = "Paris",
+                area = 120.5,
+                imageUrl = "https://example.com/image1.jpg",
+                price = 450000.0,
+                professional = "Real Estate Pro",
+                propertyType = "Apartment",
+                offerType = OfferType.RENT,
+                rooms = 5,
+            ),
+            Listing(
+                id = 2,
+                bedrooms = 2,
+                city = "Lyon",
+                area = 80.0,
+                imageUrl = "https://example.com/image2.jpg",
+                price = 300000.0,
+                professional = "Property Expert",
+                propertyType = "House",
+                offerType = OfferType.SALE,
+                rooms = 4,
+            ),
         )
-    )
 
     // ========== Initialization Tests ==========
 
     @Test
-    fun `initial state is NotInitialized`() = runTest {
-        // When
-        classUnderTest.state.test {
-            // Then
-            assertEquals(ListingsState.NotInitialized, awaitItem())
-            cancelAndIgnoreRemainingEvents()
+    fun `initial state is NotInitialized`() =
+        runTest {
+            // When
+            classUnderTest.state.test {
+                // Then
+                assertEquals(ListingsState.NotInitialized, awaitItem())
+                cancelAndIgnoreRemainingEvents()
+            }
         }
-    }
 
     // ========== LoadListings Intent Tests ==========
 
     @Test
-    fun `handleIntent LoadListings emits Loading then Success state`() = runTest {
-        // Given
-        val successResult = DataResult.Success(sampleListings)
-        coEvery { getListingsUseCase() } returns successResult
+    fun `handleIntent LoadListings emits Loading then Success state`() =
+        runTest {
+            // Given
+            val successResult = DataResult.Success(sampleListings)
+            coEvery { getListingsUseCase() } returns successResult
 
-        // When
-        classUnderTest.state.test {
-            // Skip initial state
-            assertEquals(ListingsState.NotInitialized, awaitItem())
+            // When
+            classUnderTest.state.test {
+                // Skip initial state
+                assertEquals(ListingsState.NotInitialized, awaitItem())
 
-            classUnderTest.handleIntent(ListingsIntent.LoadListings)
-            advanceUntilIdle()
+                classUnderTest.handleIntent(ListingsIntent.LoadListings)
+                advanceUntilIdle()
 
-            // Then
-            assertEquals(ListingsState.Loading, awaitItem())
-            val successState = awaitItem()
-            assertTrue(successState is ListingsState.Success)
-            assertEquals(sampleListings, (successState as ListingsState.Success).listings)
+                // Then
+                assertEquals(ListingsState.Loading, awaitItem())
+                val successState = awaitItem()
+                assertTrue(successState is ListingsState.Success)
+                assertEquals(sampleListings, (successState as ListingsState.Success).listings)
 
-            cancelAndIgnoreRemainingEvents()
+                cancelAndIgnoreRemainingEvents()
+            }
+
+            coVerify(exactly = 1) { getListingsUseCase() }
         }
-
-        coVerify(exactly = 1) { getListingsUseCase() }
-    }
 
     @Test
-    fun `handleIntent LoadListings emits Loading then Error on NetworkUnavailable`() = runTest {
-        // Given
-        val networkError = DomainError.NetworkUnavailable("No internet connection")
-        val errorResult = DataResult.Failure(networkError)
-        coEvery { getListingsUseCase() } returns errorResult
+    fun `handleIntent LoadListings emits Loading then Error on NetworkUnavailable`() =
+        runTest {
+            // Given
+            val networkError = DomainError.NetworkUnavailable("No internet connection")
+            val errorResult = DataResult.Failure(networkError)
+            coEvery { getListingsUseCase() } returns errorResult
 
-        // When
-        classUnderTest.state.test {
-            // Skip initial state
-            assertEquals(ListingsState.NotInitialized, awaitItem())
+            // When
+            classUnderTest.state.test {
+                // Skip initial state
+                assertEquals(ListingsState.NotInitialized, awaitItem())
 
-            classUnderTest.handleIntent(ListingsIntent.LoadListings)
-            advanceUntilIdle()
+                classUnderTest.handleIntent(ListingsIntent.LoadListings)
+                advanceUntilIdle()
 
-            // Then
-            assertEquals(ListingsState.Loading, awaitItem())
-            val errorState = awaitItem()
-            assertTrue(errorState is ListingsState.Error)
-            assertEquals(networkError, (errorState as ListingsState.Error).error)
+                // Then
+                assertEquals(ListingsState.Loading, awaitItem())
+                val errorState = awaitItem()
+                assertTrue(errorState is ListingsState.Error)
+                assertEquals(networkError, (errorState as ListingsState.Error).error)
 
-            cancelAndIgnoreRemainingEvents()
+                cancelAndIgnoreRemainingEvents()
+            }
+
+            coVerify(exactly = 1) { getListingsUseCase() }
         }
-
-        coVerify(exactly = 1) { getListingsUseCase() }
-    }
 
     @Test
-    fun `handleIntent LoadListings emits Loading then Error on ServerError`() = runTest {
-        // Given
-        val serverError = DomainError.ServerError("Internal server error")
-        val errorResult = DataResult.Failure(serverError)
-        coEvery { getListingsUseCase() } returns errorResult
+    fun `handleIntent LoadListings emits Loading then Error on ServerError`() =
+        runTest {
+            // Given
+            val serverError = DomainError.ServerError("Internal server error")
+            val errorResult = DataResult.Failure(serverError)
+            coEvery { getListingsUseCase() } returns errorResult
 
-        // When
-        classUnderTest.state.test {
-            // Skip initial state
-            assertEquals(ListingsState.NotInitialized, awaitItem())
+            // When
+            classUnderTest.state.test {
+                // Skip initial state
+                assertEquals(ListingsState.NotInitialized, awaitItem())
 
-            classUnderTest.handleIntent(ListingsIntent.LoadListings)
-            advanceUntilIdle()
+                classUnderTest.handleIntent(ListingsIntent.LoadListings)
+                advanceUntilIdle()
 
-            // Then
-            assertEquals(ListingsState.Loading, awaitItem())
-            val errorState = awaitItem()
-            assertTrue(errorState is ListingsState.Error)
-            assertEquals(serverError, (errorState as ListingsState.Error).error)
+                // Then
+                assertEquals(ListingsState.Loading, awaitItem())
+                val errorState = awaitItem()
+                assertTrue(errorState is ListingsState.Error)
+                assertEquals(serverError, (errorState as ListingsState.Error).error)
 
-            cancelAndIgnoreRemainingEvents()
+                cancelAndIgnoreRemainingEvents()
+            }
+
+            coVerify(exactly = 1) { getListingsUseCase() }
         }
-
-        coVerify(exactly = 1) { getListingsUseCase() }
-    }
 
     @Test
-    fun `handleIntent LoadListings emits Loading then Error on UnknownError`() = runTest {
-        // Given
-        val unknownError = DomainError.UnknownError("Something went wrong")
-        val errorResult = DataResult.Failure(unknownError)
-        coEvery { getListingsUseCase() } returns errorResult
+    fun `handleIntent LoadListings emits Loading then Error on UnknownError`() =
+        runTest {
+            // Given
+            val unknownError = DomainError.UnknownError("Something went wrong")
+            val errorResult = DataResult.Failure(unknownError)
+            coEvery { getListingsUseCase() } returns errorResult
 
-        // When
-        classUnderTest.state.test {
-            // Skip initial state
-            assertEquals(ListingsState.NotInitialized, awaitItem())
+            // When
+            classUnderTest.state.test {
+                // Skip initial state
+                assertEquals(ListingsState.NotInitialized, awaitItem())
 
-            classUnderTest.handleIntent(ListingsIntent.LoadListings)
-            advanceUntilIdle()
+                classUnderTest.handleIntent(ListingsIntent.LoadListings)
+                advanceUntilIdle()
 
-            // Then
-            assertEquals(ListingsState.Loading, awaitItem())
-            val errorState = awaitItem()
-            assertTrue(errorState is ListingsState.Error)
-            assertEquals(unknownError, (errorState as ListingsState.Error).error)
+                // Then
+                assertEquals(ListingsState.Loading, awaitItem())
+                val errorState = awaitItem()
+                assertTrue(errorState is ListingsState.Error)
+                assertEquals(unknownError, (errorState as ListingsState.Error).error)
 
-            cancelAndIgnoreRemainingEvents()
+                cancelAndIgnoreRemainingEvents()
+            }
+
+            coVerify(exactly = 1) { getListingsUseCase() }
         }
-
-        coVerify(exactly = 1) { getListingsUseCase() }
-    }
 
     // ========== Retry Intent Tests ==========
 
     @Test
-    fun `handleIntent Retry triggers loading flow from error state`() = runTest {
-        // Given - first call fails, second succeeds
-        val errorResult = DataResult.Failure(DomainError.NetworkUnavailable())
-        val successResult = DataResult.Success(sampleListings)
-        coEvery { getListingsUseCase() } returnsMany listOf(errorResult, successResult)
+    fun `handleIntent Retry triggers loading flow from error state`() =
+        runTest {
+            // Given - first call fails, second succeeds
+            val errorResult = DataResult.Failure(DomainError.NetworkUnavailable())
+            val successResult = DataResult.Success(sampleListings)
+            coEvery { getListingsUseCase() } returnsMany listOf(errorResult, successResult)
 
-        // When
-        classUnderTest.state.test {
-            // Skip initial state
-            assertEquals(ListingsState.NotInitialized, awaitItem())
+            // When
+            classUnderTest.state.test {
+                // Skip initial state
+                assertEquals(ListingsState.NotInitialized, awaitItem())
 
-            // First attempt fails
-            classUnderTest.handleIntent(ListingsIntent.LoadListings)
-            advanceUntilIdle()
-            assertEquals(ListingsState.Loading, awaitItem())
-            assertTrue(awaitItem() is ListingsState.Error)
+                // First attempt fails
+                classUnderTest.handleIntent(ListingsIntent.LoadListings)
+                advanceUntilIdle()
+                assertEquals(ListingsState.Loading, awaitItem())
+                assertTrue(awaitItem() is ListingsState.Error)
 
-            // Retry succeeds
-            classUnderTest.handleIntent(ListingsIntent.Retry)
-            advanceUntilIdle()
+                // Retry succeeds
+                classUnderTest.handleIntent(ListingsIntent.Retry)
+                advanceUntilIdle()
 
-            // Then
-            assertEquals(ListingsState.Loading, awaitItem())
-            val successState = awaitItem()
-            assertTrue(successState is ListingsState.Success)
-            assertEquals(sampleListings, (successState as ListingsState.Success).listings)
+                // Then
+                assertEquals(ListingsState.Loading, awaitItem())
+                val successState = awaitItem()
+                assertTrue(successState is ListingsState.Success)
+                assertEquals(sampleListings, (successState as ListingsState.Success).listings)
 
-            cancelAndIgnoreRemainingEvents()
+                cancelAndIgnoreRemainingEvents()
+            }
+
+            coVerify(exactly = 2) { getListingsUseCase() }
         }
-
-        coVerify(exactly = 2) { getListingsUseCase() }
-    }
 
     // ========== OnListingClick Intent Tests ==========
 

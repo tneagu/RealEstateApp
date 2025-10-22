@@ -8,7 +8,6 @@ import com.tneagu.realestateapp.features.listings.domain.model.Listing
  * Defines the contract for fetching listing data.
  */
 interface ListingsRepository {
-
     /**
      * Fetches all listings from the API.
      *

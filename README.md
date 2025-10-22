@@ -11,7 +11,7 @@ A modern Android application showcasing real estate listings, built with Clean A
 - [Tech Stack](#tech-stack)
   - [Core](#core)
   - [Networking](#networking)
-  - [Architecture](#architecture-1)
+  - [Architecture](#architecture)
   - [Testing](#testing-1)
   - [Code Quality & CI/CD](#code-quality--cicd)
 - [Project Structure](#project-structure)
@@ -247,7 +247,7 @@ After running tests with coverage:
 ### Quality Standards
 
 - **Code Coverage**: Target 80%+ on business logic (mappers, repositories, ViewModels)
-- **Detekt Rules**: Custom rules enforcing Clean Architecture and MVI patterns
+- **Detekt Rules**: Standard code quality checks and Kotlin best practices
 - **Kotlin Style**: Official Kotlin coding conventions
 - **Max Line Length**: 120 characters
 - **Max Complexity**: 15 per method

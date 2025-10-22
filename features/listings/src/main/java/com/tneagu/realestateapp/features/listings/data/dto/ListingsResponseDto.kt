@@ -8,5 +8,5 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 internal data class ListingsResponseDto(
     val items: List<ListingDto>,
-    val totalCount: Int
+    val totalCount: Int,
 )

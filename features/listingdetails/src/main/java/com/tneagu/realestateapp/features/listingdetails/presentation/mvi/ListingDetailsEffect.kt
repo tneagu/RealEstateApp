@@ -5,7 +5,6 @@ package com.tneagu.realestateapp.features.listingdetails.presentation.mvi
  * These are events that should be consumed only once (e.g., navigation, toasts).
  */
 sealed interface ListingDetailsEffect {
-
     /**
      * Effect to navigate back to the previous screen.
      */

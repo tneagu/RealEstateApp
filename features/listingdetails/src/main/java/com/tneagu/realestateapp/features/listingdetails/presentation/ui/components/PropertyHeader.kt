@@ -34,14 +34,14 @@ fun PropertyHeader(
     city: String,
     price: Double,
     offerType: OfferType,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
         // Title
         Text(
             text = "$propertyType in $city",
             style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -50,28 +50,29 @@ fun PropertyHeader(
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = "€$price",
                 style = MaterialTheme.typography.headlineMedium,
                 color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
             )
 
             Surface(
-                color = if (offerType == OfferType.RENT) {
-                    MaterialTheme.colorScheme.secondaryContainer
-                } else {
-                    MaterialTheme.colorScheme.tertiaryContainer
-                },
-                shape = MaterialTheme.shapes.small
+                color =
+                    if (offerType == OfferType.RENT) {
+                        MaterialTheme.colorScheme.secondaryContainer
+                    } else {
+                        MaterialTheme.colorScheme.tertiaryContainer
+                    },
+                shape = MaterialTheme.shapes.small,
             ) {
                 Text(
                     text = offerType.name,
                     modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
                     style = MaterialTheme.typography.labelMedium,
-                    fontWeight = FontWeight.SemiBold
+                    fontWeight = FontWeight.SemiBold,
                 )
             }
         }
@@ -87,7 +88,7 @@ private fun PropertyHeaderRentPreview() {
             city = "Paris",
             price = 1500.0,
             offerType = OfferType.RENT,
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
         )
     }
 }
@@ -101,7 +102,7 @@ private fun PropertyHeaderSalePreview() {
             city = "Lyon",
             price = 350000.0,
             offerType = OfferType.SALE,
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
         )
     }
 }

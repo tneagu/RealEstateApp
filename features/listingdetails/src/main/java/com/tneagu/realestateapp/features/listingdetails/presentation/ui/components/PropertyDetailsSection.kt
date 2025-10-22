@@ -28,14 +28,14 @@ fun PropertyDetailsSection(
     bedrooms: Int?,
     rooms: Int?,
     area: Double,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
         // Section Title
         Text(
             text = stringResource(R.string.listing_details_section_details),
             style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -55,7 +55,7 @@ private fun PropertyDetailsSectionPreview() {
             bedrooms = 3,
             rooms = 4,
             area = 85.5,
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
         )
     }
 }
@@ -68,7 +68,7 @@ private fun PropertyDetailsSectionMinimalPreview() {
             bedrooms = null,
             rooms = null,
             area = 60.0,
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
         )
     }
 }

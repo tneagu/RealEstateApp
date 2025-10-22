@@ -7,7 +7,6 @@ package com.tneagu.realestateapp.core.domain.model
  * @param T The type of data on success.
  */
 sealed interface DataResult<out T> {
-
     /**
      * Represents a successful operation with data.
      */

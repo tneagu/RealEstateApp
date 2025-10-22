@@ -21,47 +21,48 @@ import javax.inject.Inject
  * Manages UI state, handles user intents, and emits one-time effects.
  */
 @HiltViewModel
-class ListingsViewModel @Inject constructor(
-    private val getListingsUseCase: GetListingsUseCase
-) : ViewModel() {
+class ListingsViewModel
+    @Inject
+    constructor(
+        private val getListingsUseCase: GetListingsUseCase,
+    ) : ViewModel() {
+        private val _state = MutableStateFlow<ListingsState>(ListingsState.NotInitialized)
+        val state: StateFlow<ListingsState> = _state.asStateFlow()
 
-    private val _state = MutableStateFlow<ListingsState>(ListingsState.NotInitialized)
-    val state: StateFlow<ListingsState> = _state.asStateFlow()
+        private val _effect = Channel<ListingsEffect>(Channel.BUFFERED)
+        val effect = _effect.receiveAsFlow()
 
-    private val _effect = Channel<ListingsEffect>(Channel.BUFFERED)
-    val effect = _effect.receiveAsFlow()
-
-    /**
-     * Handles user intents and triggers appropriate state changes.
-     *
-     * @param intent The user intent to handle.
-     */
-    fun handleIntent(intent: ListingsIntent) {
-        when (intent) {
-            ListingsIntent.LoadListings -> loadListings()
-            ListingsIntent.Retry -> loadListings()
-            is ListingsIntent.OnListingClick -> navigateToDetails(intent.listingId)
+        /**
+         * Handles user intents and triggers appropriate state changes.
+         *
+         * @param intent The user intent to handle.
+         */
+        fun handleIntent(intent: ListingsIntent) {
+            when (intent) {
+                ListingsIntent.LoadListings -> loadListings()
+                ListingsIntent.Retry -> loadListings()
+                is ListingsIntent.OnListingClick -> navigateToDetails(intent.listingId)
+            }
         }
-    }
 
-    private fun loadListings() {
-        viewModelScope.launch {
-            _state.value = ListingsState.Loading
+        private fun loadListings() {
+            viewModelScope.launch {
+                _state.value = ListingsState.Loading
 
-            when (val result = getListingsUseCase()) {
-                is DataResult.Success -> {
-                    _state.value = ListingsState.Success(result.data)
-                }
-                is DataResult.Failure -> {
-                    _state.value = ListingsState.Error(result.error)
+                when (val result = getListingsUseCase()) {
+                    is DataResult.Success -> {
+                        _state.value = ListingsState.Success(result.data)
+                    }
+                    is DataResult.Failure -> {
+                        _state.value = ListingsState.Error(result.error)
+                    }
                 }
             }
         }
-    }
 
-    private fun navigateToDetails(listingId: Int) {
-        viewModelScope.launch {
-            _effect.send(ListingsEffect.NavigateToDetails(listingId))
+        private fun navigateToDetails(listingId: Int) {
+            viewModelScope.launch {
+                _effect.send(ListingsEffect.NavigateToDetails(listingId))
+            }
         }
     }
-}

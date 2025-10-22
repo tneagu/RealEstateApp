@@ -15,5 +15,5 @@ data class Listing(
     val professional: String,
     val propertyType: String,
     val offerType: OfferType,
-    val rooms: Int?
+    val rooms: Int?,
 )

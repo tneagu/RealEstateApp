@@ -48,7 +48,7 @@ jacoco {
 
 // Aggregate JaCoCo report for all modules
 tasks.register<JacocoReport>("jacocoAggregatedReport") {
-    dependsOn(subprojects.map { it.tasks.withType<Test>() })
+    dependsOn(subprojects.mapNotNull { it.tasks.findByName("testDebugUnitTest") })
 
     val sourceDirs = files()
     val classDirs = files()

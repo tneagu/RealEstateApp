@@ -27,6 +27,7 @@ import com.tneagu.realestateapp.core.ui.components.ErrorView
 import com.tneagu.realestateapp.core.ui.components.LoadingView
 import com.tneagu.realestateapp.core.ui.theme.RealEstateAppTheme
 import com.tneagu.realestateapp.core.ui.theme.Spacing
+import com.tneagu.realestateapp.features.listings.R
 import com.tneagu.realestateapp.features.listings.domain.model.Listing
 import com.tneagu.realestateapp.features.listings.presentation.mvi.ListingsEffect
 import com.tneagu.realestateapp.features.listings.presentation.mvi.ListingsIntent
@@ -34,7 +35,6 @@ import com.tneagu.realestateapp.features.listings.presentation.mvi.ListingsState
 import com.tneagu.realestateapp.features.listings.presentation.ui.components.ListingCard
 import com.tneagu.realestateapp.features.listings.presentation.viewmodel.ListingsViewModel
 import com.tneagu.realestateapp.core.ui.R as CoreUiR
-import com.tneagu.realestateapp.features.listings.R
 
 /**
  * Main listings screen that displays a list of real estate listings.
@@ -48,7 +48,7 @@ import com.tneagu.realestateapp.features.listings.R
 fun ListingsScreen(
     navigateToListingDetails: (Int) -> Unit,
     viewModel: ListingsViewModel = hiltViewModel(),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -80,15 +80,16 @@ fun ListingsScreen(
                 title = {
                     Text(
                         text = stringResource(R.string.listings_screen_title),
-                        style = MaterialTheme.typography.titleLarge
+                        style = MaterialTheme.typography.titleLarge,
                     )
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary
-                )
+                colors =
+                    TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                    ),
             )
-        }
+        },
     ) { paddingValues ->
         when (val currentState = state) {
             is ListingsState.NotInitialized -> {
@@ -98,7 +99,7 @@ fun ListingsScreen(
             is ListingsState.Loading -> {
                 LoadingView(
                     modifier = Modifier.padding(paddingValues),
-                    message = stringResource(R.string.listings_loading)
+                    message = stringResource(R.string.listings_loading),
                 )
             }
 
@@ -106,7 +107,7 @@ fun ListingsScreen(
                 if (currentState.listings.isEmpty()) {
                     EmptyView(
                         message = stringResource(R.string.listings_empty),
-                        modifier = Modifier.padding(paddingValues)
+                        modifier = Modifier.padding(paddingValues),
                     )
                 } else {
                     ListingsContent(
@@ -114,7 +115,7 @@ fun ListingsScreen(
                         onListingClick = { listingId ->
                             viewModel.handleIntent(ListingsIntent.OnListingClick(listingId))
                         },
-                        modifier = Modifier.padding(paddingValues)
+                        modifier = Modifier.padding(paddingValues),
                     )
                 }
             }
@@ -123,7 +124,7 @@ fun ListingsScreen(
                 ErrorView(
                     message = getErrorMessage(currentState.error),
                     onRetry = { viewModel.handleIntent(ListingsIntent.Retry) },
-                    modifier = Modifier.padding(paddingValues)
+                    modifier = Modifier.padding(paddingValues),
                 )
             }
         }
@@ -137,20 +138,20 @@ fun ListingsScreen(
 private fun ListingsContent(
     listings: List<Listing>,
     onListingClick: (Int) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(Spacing.default),
-        verticalArrangement = Arrangement.spacedBy(Spacing.default)
+        verticalArrangement = Arrangement.spacedBy(Spacing.default),
     ) {
         items(
             items = listings,
-            key = { it.id }
+            key = { it.id },
         ) { listing ->
             ListingCard(
                 listing = listing,
-                onClick = onListingClick
+                onClick = onListingClick,
             )
         }
     }
@@ -183,16 +184,17 @@ private fun ListingsScreenLoadingPreview() {
             topBar = {
                 TopAppBar(
                     title = { Text("Real Estate Listings") },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        titleContentColor = MaterialTheme.colorScheme.onPrimary
-                    )
+                    colors =
+                        TopAppBarDefaults.topAppBarColors(
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                        ),
                 )
-            }
+            },
         ) { paddingValues ->
             LoadingView(
                 modifier = Modifier.padding(paddingValues),
-                message = "Loading listings..."
+                message = "Loading listings...",
             )
         }
     }
@@ -203,33 +205,34 @@ private fun ListingsScreenLoadingPreview() {
 private fun ListingsContentPreview() {
     RealEstateAppTheme {
         ListingsContent(
-            listings = listOf(
-                Listing(
-                    id = 1,
-                    bedrooms = 3,
-                    city = "Paris",
-                    area = 120.5,
-                    imageUrl = null,
-                    price = 450000.0,
-                    professional = "Real Estate Pro",
-                    propertyType = "Apartment",
-                    offerType = OfferType.RENT,
-                    rooms = 5
+            listings =
+                listOf(
+                    Listing(
+                        id = 1,
+                        bedrooms = 3,
+                        city = "Paris",
+                        area = 120.5,
+                        imageUrl = null,
+                        price = 450000.0,
+                        professional = "Real Estate Pro",
+                        propertyType = "Apartment",
+                        offerType = OfferType.RENT,
+                        rooms = 5,
+                    ),
+                    Listing(
+                        id = 2,
+                        bedrooms = 4,
+                        city = "Lyon",
+                        area = 200.0,
+                        imageUrl = null,
+                        price = 850000.0,
+                        professional = "Premium Properties",
+                        propertyType = "House",
+                        offerType = OfferType.SALE,
+                        rooms = 7,
+                    ),
                 ),
-                Listing(
-                    id = 2,
-                    bedrooms = 4,
-                    city = "Lyon",
-                    area = 200.0,
-                    imageUrl = null,
-                    price = 850000.0,
-                    professional = "Premium Properties",
-                    propertyType = "House",
-                    offerType = OfferType.SALE,
-                    rooms = 7
-                )
-            ),
-            onListingClick = {}
+            onListingClick = {},
         )
     }
 }

@@ -29,20 +29,21 @@ import com.tneagu.realestateapp.core.ui.theme.Spacing
 @Composable
 fun EmptyView(
     message: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(Spacing.large),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .padding(Spacing.large),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         Icon(
             imageVector = Icons.Default.Home,
             contentDescription = "Empty",
             tint = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.size(Dimensions.iconExtraLarge)
+            modifier = Modifier.size(Dimensions.iconExtraLarge),
         )
 
         Text(
@@ -50,7 +51,7 @@ fun EmptyView(
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,
-            modifier = Modifier.padding(top = Spacing.default)
+            modifier = Modifier.padding(top = Spacing.default),
         )
     }
 }
