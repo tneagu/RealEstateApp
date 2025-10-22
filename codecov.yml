@@ -1,0 +1,40 @@
+codecov:
+  require_ci_to_pass: true
+  notify:
+    wait_for_ci: true
+
+coverage:
+  precision: 2
+  round: down
+  range: "70...100"
+
+  status:
+    project:
+      default:
+        target: 80%
+        threshold: 2%
+    patch:
+      default:
+        target: 80%
+        threshold: 5%
+
+comment:
+  layout: "reach,diff,flags,tree,files"
+  behavior: default
+  require_changes: false
+  require_base: false
+  require_head: true
+
+ignore:
+  - "**/*Test.kt"
+  - "**/*Tests.kt"
+  - "**/test/**"
+  - "**/androidTest/**"
+  - "**/*Module.kt"
+  - "**/*_Factory.kt"
+  - "**/*_MembersInjector.kt"
+  - "**/Hilt_*.kt"
+  - "**/BuildConfig.kt"
+  - "**/R.kt"
+  - "**/R$*.kt"
+  - "**/Manifest*.kt"

@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.ktlint)
+    jacoco
 }
 
 android {
@@ -34,6 +36,11 @@ android {
             jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
         }
     }
+}
+
+ktlint {
+    android.set(true)
+    ignoreFailures.set(false)
 }
 
 dependencies {

@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.ktlint)
+    jacoco
 }
 
 android {
@@ -42,7 +44,69 @@ android {
         unitTests.all {
             it.useJUnitPlatform()
         }
+        unitTests {
+            isIncludeAndroidResources = true
+        }
     }
+}
+
+// Ktlint configuration
+ktlint {
+    android.set(true)
+    ignoreFailures.set(false)
+    reporters {
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN)
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
+    }
+}
+
+// JaCoCo configuration
+tasks.withType<Test> {
+    configure<JacocoTaskExtension> {
+        isIncludeNoLocationClasses = true
+        excludes = listOf("jdk.internal.*")
+    }
+}
+
+tasks.register<JacocoReport>("jacocoTestReport") {
+    dependsOn("testDebugUnitTest")
+
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+
+    val fileFilter = listOf(
+        "**/R.class",
+        "**/R$*.class",
+        "**/BuildConfig.*",
+        "**/Manifest*.*",
+        "**/*Test*.*",
+        "android/**/*.*",
+        "**/*\$Lambda$*.*",
+        "**/*\$inlined$*.*",
+        "**/*Module.*",
+        "**/*Module\$*.*",
+        "**/*_Factory.*",
+        "**/*_MembersInjector.*",
+        "**/Hilt_*.*",
+        "**/*Hilt*.*",
+        "**/*_Impl.*",
+        "**/*ComposableSingletons*.*"
+    )
+
+    val debugTree = fileTree("${layout.buildDirectory.get()}/tmp/kotlin-classes/debug") {
+        exclude(fileFilter)
+    }
+
+    val mainSrc = "${project.projectDir}/src/main/java"
+    val mainSrcKotlin = "${project.projectDir}/src/main/kotlin"
+
+    sourceDirectories.setFrom(files(listOf(mainSrc, mainSrcKotlin)))
+    classDirectories.setFrom(files(listOf(debugTree)))
+    executionData.setFrom(fileTree(layout.buildDirectory.get()) {
+        include("**/*.exec", "**/*.ec")
+    })
 }
 
 dependencies {
