@@ -48,9 +48,9 @@ These documents follows standard ADR (Architecture Decision Records) format and 
 
 ### Architecture topics worth being discussed
 
-- **Pagination** Usually a list of multiple items should be paginated, and there are multiple pagination strategies such as by offset or by cursor/keyset. Since the api contract does not provide a pagination mechanism, I found it useless to implement.
-- **Caching strategy** Because of time limitation, I couldn't built a cache mechanism, but it's worth exploring adding cache in order to avoid network overload when navigation back and forth.
-- **Offline first** Worth discussing if these kind of features needs offline-first behavior, my first assumption is that caching will be enough.
+- **Pagination**: Usually a list of multiple items should be paginated, and there are multiple pagination strategies such as by offset or by cursor/keyset. Since the api contract does not provide a pagination mechanism, I found it useless to implement.
+- **Caching strategy**: Because of time limitation, I couldn't built a cache mechanism, but it's worth exploring adding cache in order to avoid network overload when navigation back and forth.
+- **Offline first**: Worth discussing if these kind of features needs offline-first behavior, my first assumption is that caching will be enough.
 
 ## Assumptions
 
