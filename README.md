@@ -54,7 +54,7 @@ These documents follows standard ADR (Architecture Decision Records) format and 
 
 ## Assumptions
 
-Since an API guide is missing, I made some values assumptions for OfferType such as Rent/Buy. I am aware that there are values that are mapped to UNKNWON. Since no docs are available, I will consider this OK for demo purposes. 
+Since an API guide is missing, I made some values assumptions for OfferType such as Rent/Buy. I am aware that there are values that are mapped to UNKNOWN. Since no docs are available, I will consider this OK for demo purposes. 
 
 ## Tech Stack
 
