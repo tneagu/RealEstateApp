@@ -64,7 +64,7 @@ fun ListingCard(
                 modifier =
                     Modifier
                         .fillMaxWidth()
-                        .aspectRatio(Dimensions.listingImageAspectRatio)
+                        .aspectRatio(Dimensions.LISTING_IMAGE_ASPECT_RATIO)
                         .clip(MaterialTheme.shapes.medium),
                 contentScale = ContentScale.Crop,
             )

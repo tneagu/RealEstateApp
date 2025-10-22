@@ -8,6 +8,7 @@ import androidx.compose.ui.unit.dp
  */
 object Dimensions {
     // Card dimensions
+
     /** Standard elevation for cards */
     val cardElevation = 2.dp
 
@@ -15,11 +16,12 @@ object Dimensions {
     val cardCornerRadius = 12.dp
 
     // Image dimensions
+
     /** Height for listing images in cards */
     val listingImageHeight = 200.dp
 
     /** Aspect ratio for listing images (width / height) */
-    const val listingImageAspectRatio = 16f / 9f
+    const val LISTING_IMAGE_ASPECT_RATIO = 16f / 9f
 
     /** Height for detail screen hero image */
     val detailImageHeight = 300.dp
@@ -31,6 +33,7 @@ object Dimensions {
     val iconExtraLarge = 48.dp
 
     // Touch targets & component heights
+
     /** Minimum touch target size (accessibility)*/
     val minTouchTarget = 48.dp
 
@@ -41,6 +44,7 @@ object Dimensions {
     val topAppBarHeight = 64.dp
 
     // Dividers & borders
+
     /** Standard divider thickness */
     val dividerThickness = 1.dp
 

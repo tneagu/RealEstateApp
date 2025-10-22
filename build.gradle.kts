@@ -48,51 +48,62 @@ jacoco {
 
 // Aggregate JaCoCo report for all modules
 tasks.register<JacocoReport>("jacocoAggregatedReport") {
+    group = "verification"
+    description = "Generates aggregated JaCoCo coverage report from all modules"
+
     dependsOn(subprojects.mapNotNull { it.tasks.findByName("testDebugUnitTest") })
 
-    val sourceDirs = files()
-    val classDirs = files()
-    val executionData = files()
+    val fileExclusions = listOf(
+        "**/R.class",
+        "**/R$*.class",
+        "**/BuildConfig.*",
+        "**/Manifest*.*",
+        "**/*Test*.*",
+        "android/**/*.*",
+        "**/*\$Lambda$*.*",
+        "**/*\$inlined$*.*",
+        "**/*Module.*",
+        "**/*Module\$*.*",
+        "**/*_Factory.*",
+        "**/*_MembersInjector.*",
+        "**/Hilt_*.*",
+        "**/*Hilt*.*",
+        "**/*_Impl.*",
+        "**/*ComposableSingletons*.*",
+        // Exclude UI layer (Composables - require UI tests, not unit tests)
+        "**/ui/**/*.class",
+        "**/preview/**/*.class",
+        "**/*Activity*.class",
+        "**/navigation/**/*.class"
+    )
 
-    subprojects.forEach { subproject ->
-        subproject.plugins.withType<JacocoPlugin>().configureEach {
-            sourceDirs.from(subproject.files("src/main/java", "src/main/kotlin"))
-
-            classDirs.from(subproject.fileTree("${subproject.layout.buildDirectory.get()}/tmp/kotlin-classes/debug") {
-                exclude(
-                    "**/R.class",
-                    "**/R$*.class",
-                    "**/BuildConfig.*",
-                    "**/Manifest*.*",
-                    "**/*Test*.*",
-                    "android/**/*.*",
-                    "**/*\$Lambda$*.*",
-                    "**/*\$inlined$*.*",
-                    "**/*Module.*",
-                    "**/*Module\$*.*",
-                    "**/*_Factory.*",
-                    "**/*_MembersInjector.*",
-                    "**/Hilt_*.*",
-                    "**/*Hilt*.*",
-                    "**/*_Impl.*",
-                    "**/*ComposableSingletons*.*",
-                    // Exclude UI layer (Composables - require UI tests, not unit tests)
-                    "**/ui/**/*.class",
-                    "**/preview/**/*.class",
-                    "**/*Activity*.class",
-                    "**/navigation/**/*.class"
-                )
-            })
-
-            executionData.from(subproject.fileTree(subproject.layout.buildDirectory.get()) {
-                include("**/*.exec", "**/*.ec")
-            })
+    // Collect source directories
+    sourceDirectories.setFrom(
+        subprojects.flatMap { subproject ->
+            listOf(
+                subproject.file("src/main/java"),
+                subproject.file("src/main/kotlin")
+            ).filter { it.exists() }
         }
-    }
+    )
 
-    sourceDirectories.setFrom(sourceDirs)
-    classDirectories.setFrom(classDirs)
-    executionData.setFrom(executionData)
+    // Collect class directories with exclusions
+    classDirectories.setFrom(
+        subprojects.map { subproject ->
+            subproject.fileTree("${subproject.layout.buildDirectory.get()}/tmp/kotlin-classes/debug") {
+                exclude(fileExclusions)
+            }
+        }
+    )
+
+    // Collect execution data
+    executionData.setFrom(
+        subprojects.map { subproject ->
+            subproject.fileTree(subproject.layout.buildDirectory.get()) {
+                include("**/*.exec", "**/*.ec")
+            }
+        }
+    )
 
     reports {
         html.required.set(true)

@@ -94,6 +94,11 @@ tasks.register<JacocoReport>("jacocoTestReport") {
             "**/*Hilt*.*",
             "**/*_Impl.*",
             "**/*ComposableSingletons*.*",
+            // Exclude UI layer (Composables - require UI tests, not unit tests)
+            "**/ui/**/*.class",
+            "**/preview/**/*.class",
+            "**/*Activity*.class",
+            "**/navigation/**/*.class",
         )
 
     val debugTree =

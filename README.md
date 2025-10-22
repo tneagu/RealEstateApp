@@ -37,7 +37,7 @@ All major architectural decisions are documented in the [docs/adr/](docs/adr/) d
 
 - **[ADR-001](docs/adr/001-modularization-strategy.md)**: Feature-based modularization strategy
 - **[ADR-002](docs/adr/002-error-handling-approach.md)**: Domain-centric error handling
-- **[ADR-003](docs/adr/003-dependency-injection-setup.md)**: DI scoping strategyF
+- **[ADR-003](docs/adr/003-dependency-injection-setup.md)**: DI scoping strategy
 
 These documents follows standard ADR (Architecture Decision Records) format and explains:
 - **Context**: Why the decision was needed

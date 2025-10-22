@@ -72,7 +72,7 @@ jobs:
         run: ./gradlew testDebugUnitTest
 
       - name: Generate Coverage Report
-        run: ./gradlew jacocoTestReport
+        run: ./gradlew jacocoAggregatedReport
 
       - name: Upload Test Results
         if: always()

@@ -17,7 +17,8 @@ private val LightColorScheme =
         onSecondary = OnSecondary,
         secondaryContainer = SecondaryContainer,
         onSecondaryContainer = OnSecondaryContainer,
-        tertiary = Secondary, // Using secondary for tertiary
+        // Using secondary for tertiary
+        tertiary = Secondary,
         onTertiary = OnSecondary,
         background = Background,
         onBackground = OnBackground,

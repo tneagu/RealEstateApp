@@ -38,3 +38,7 @@ ignore:
   - "**/R.kt"
   - "**/R$*.kt"
   - "**/Manifest*.kt"
+  - "**/ui/**"
+  - "**/navigation/**"
+  - "**/MainActivity.kt"
+  - "**/preview/**"
