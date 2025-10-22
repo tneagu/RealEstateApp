@@ -155,12 +155,10 @@ In a production application, a release build would include:
 #### Code Optimization
 - R8/ProGuard minification and obfuscation
 - Resource shrinking to reduce APK size
-- Code optimization for performance
 
 #### Security
 - Production keystore (stored securely)
 - Certificate pinning for API calls
-- ProGuard rules to protect sensitive code paths
 
 #### Configuration
 - Production API endpoints (vs test/staging)
