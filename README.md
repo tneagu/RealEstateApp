@@ -8,6 +8,7 @@ A modern Android application showcasing real estate listings, built with Clean A
 
 ## Table of Contents
 - [Key Architectural Decisions](#key-architectural-decisions)
+- [Assumptions](#assumptions)
 - [Tech Stack](#tech-stack)
   - [Core](#core)
   - [Networking](#networking)
@@ -44,11 +45,16 @@ These documents follows standard ADR (Architecture Decision Records) format and 
 - **Consequences**: Trade-offs and implications
 - **Alternatives**: What else was considered
 
+## Assumptions
+
+Since an API guide is missing, I made some values assumptions for OfferType such as Rent/Buy. I am aware that there are values that are mapped to UNKNWON. Since no docs are available, I will consider this OK for demo purposes. 
+
 ## Tech Stack
 
 ### Core
 - **Kotlin** 2.2.20 - 100% Kotlin codebase
 - **Jetpack Compose** - Modern declarative UI
+- **Jetpack Navigation 2** - While I am aware of Navigation 3 and its benefits (such as owning the backstack), project requirements are to treat this app like a production one. Since Navigation 3 is still in alpha, its usage has been excluded. 
 - **Material Design 3** - UI components and theming
 - **Hilt** - Dependency injection
 - **Coroutines** - Asynchronous programming
