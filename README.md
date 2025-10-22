@@ -48,13 +48,14 @@ These documents follows standard ADR (Architecture Decision Records) format and 
 
 ### Architecture topics worth being discussed
 
-- **Pagination**: Usually a list of multiple items should be paginated, and there are multiple pagination strategies such as by offset or by cursor/keyset. Since the api contract does not provide a pagination mechanism, I found it useless to implement.
-- **Caching strategy**: Because of time limitation, I couldn't built a cache mechanism, but it's worth exploring adding cache in order to avoid network overload when navigation back and forth.
+- **Pagination**: Usually a list of multiple items should be paginated, and there are multiple pagination strategies such as by offset or by cursor/keys. Since the api contract does not provide a pagination mechanism, I found it useless to implement.
+- **Caching strategy**: See [ADR-004](docs/adr/004-caching-strategy-proposal.md) for detailed architectural analysis of three caching approaches. Not implemented due to time constraints and to avoid making unvalidated API contract assumptions (schema compatibility between list and detail endpoints).
 - **Offline first**: Worth discussing if these kind of features needs offline-first behavior, my first assumption is that caching will be enough.
 
 ## Assumptions
 
-Since an API guide is missing, I made some values assumptions for OfferType such as Rent/Buy. I am aware that there are values that are mapped to UNKNOWN. Since no docs are available, I will consider this OK for demo purposes. 
+- Since there are 2 endpoints, one for listings, one for listing detail, assumed that Listing and ListingDetail models can evolve independently (Listing being a summary).
+- Since an API guide is missing, I made some values assumptions for OfferType such as Rent/Buy. I am aware that there are values that are mapped to UNKNOWN. Since no docs are available, I will consider this OK for demo purposes. 
 
 ## Tech Stack
 
