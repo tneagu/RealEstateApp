@@ -7,10 +7,7 @@
 A modern Android application showcasing real estate listings, built with Clean Architecture, MVI pattern, Jetpack Compose, and comprehensive CI/CD automation.
 
 ## Table of Contents
-- [Architecture](#architecture)
-  - [Key Architectural Decisions](#key-architectural-decisions)
-  - [Architecture Diagram](#architecture-diagram)
-  - [Data Flow](#data-flow)
+- [Key Architectural Decisions](#key-architectural-decisions)
 - [Tech Stack](#tech-stack)
   - [Core](#core)
   - [Networking](#networking)
@@ -33,9 +30,7 @@ A modern Android application showcasing real estate listings, built with Clean A
   - [Quality Standards](#quality-standards)
 - [License](#license)
 
-## Architecture
-
-### Key Architectural Decisions
+## Key Architectural Decisions
 
 This project follows **Clean Architecture** principles with **MVI (Model-View-Intent)** pattern for presentation layer.
 All major architectural decisions are documented in the [docs/adr/](docs/adr/) directory:
@@ -50,70 +45,6 @@ These documents follows standard ADR (Architecture Decision Records) format and 
 - **Rationale**: Why we made that choice
 - **Consequences**: Trade-offs and implications
 - **Alternatives**: What else was considered
-
-### Architecture Diagram
-
-```mermaid
-graph TB
-    subgraph "Presentation Layer"
-        UI[Compose UI]
-        VM[ViewModel + MVI]
-        State[State/Intent/Effect]
-    end
-
-    subgraph "Domain Layer"
-        UC[Use Cases]
-        Model[Domain Models]
-        Repo[Repository Interfaces]
-    end
-
-    subgraph "Data Layer"
-        RepoImpl[Repository Impl]
-        API[Retrofit API]
-        DTO[DTOs]
-        Mapper[Mappers]
-    end
-
-    UI --> VM
-    VM --> State
-    VM --> UC
-    UC --> Repo
-    RepoImpl -.implements.-> Repo
-    RepoImpl --> API
-    RepoImpl --> Mapper
-    API --> DTO
-    Mapper --> Model
-
-    style UI fill:#e1f5ff
-    style VM fill:#b3e5fc
-    style UC fill:#fff9c4
-    style Repo fill:#fff59d
-    style RepoImpl fill:#c8e6c9
-    style API fill:#a5d6a7
-```
-
-### Data Flow
-
-```mermaid
-sequenceDiagram
-    participant UI as Compose UI
-    participant VM as ViewModel
-    participant UC as UseCase
-    participant Repo as Repository
-    participant API as Retrofit API
-
-    UI->>VM: User Intent (e.g., LoadListings)
-    VM->>UC: invoke()
-    UC->>Repo: getListings()
-    Repo->>API: HTTP Request
-    API-->>Repo: Response DTO
-    Repo->>Repo: Map DTO → Domain Model
-    Repo-->>UC: DataResult<List<Listing>>
-    UC-->>VM: DataResult
-    VM->>VM: Update State
-    VM-->>UI: State (Success/Error/Loading)
-    UI->>UI: Recompose with new state
-```
 
 ## Tech Stack
 
