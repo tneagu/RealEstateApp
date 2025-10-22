@@ -25,9 +25,7 @@ A modern Android application showcasing real estate listings, built with Clean A
 - [Testing](#testing)
   - [Unit Tests](#unit-tests)
   - [Coverage Reports](#coverage-reports)
-- [Code Quality](#code-quality)
-  - [Static Analysis](#static-analysis)
-  - [Quality Standards](#quality-standards)
+- [Quality Standards](#quality-standards)
 - [License](#license)
 
 ## Key Architectural Decisions
@@ -175,7 +173,7 @@ Every push to `master` triggers:
 #### 2. Unit Tests & Coverage
 - Run all module tests in parallel
 - Generate JaCoCo coverage reports
-- Upload coverage to Codecov
+- Upload coverage to Codecov. Check [Codecov](https://codecov.io/gh/tneagu/RealEstateApp)
 - **Target**: 80%+ coverage on critical paths
 
 #### 3. Build Validation
@@ -201,50 +199,7 @@ Optimizations in place:
 
 **Typical CI build time**: ~8-12 minutes
 
-## Testing
-
-### Unit Tests
-
-Located in `src/test/` directories across all modules.
-
-```bash
-# Run all tests
-./gradlew test
-
-# Run tests for specific module
-./gradlew :features:listings:testDebugUnitTest
-
-# Run with coverage
-./gradlew jacocoTestReport
-```
-
-### Coverage Reports
-
-After running tests with coverage:
-- **HTML Report**: `build/reports/jacoco/jacocoAggregatedReport/html/index.html`
-- **XML Report**: `build/reports/jacoco/jacocoAggregatedReport/jacocoAggregatedReport.xml`
-- **Online**: Check [Codecov](https://codecov.io/gh/tneagu/RealEstateApp)
-
-
-## Code Quality
-
-### Static Analysis
-
-```bash
-# Run Detekt
-./gradlew detekt
-
-# Run Android Lint
-./gradlew lintDebug
-
-# Run Ktlint check
-./gradlew ktlintCheck
-
-# Auto-format with Ktlint
-./gradlew ktlintFormat
-```
-
-### Quality Standards
+## Quality Standards
 
 - **Code Coverage**: Target 80%+ on business logic (mappers, repositories, ViewModels)
 - **Detekt Rules**: Standard code quality checks and Kotlin best practices
